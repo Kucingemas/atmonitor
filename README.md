@@ -1,6 +1,6 @@
 # atmonitor
 
-A new Flutter application.
+A Flutter application to keep track of the technician when he/she/apacheHelicopter is fixing ATM machine
 
 ## Getting Started
 

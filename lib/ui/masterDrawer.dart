@@ -22,7 +22,10 @@ class MasterDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Daftar Pekerjaan"),
-            trailing: Icon(Icons.work),
+            trailing: Icon(
+              Icons.work,
+              color: Colors.blue,
+            ),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/availablejobs");
@@ -30,24 +33,24 @@ class MasterDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Pekerjaan Aktif"),
-            trailing: Icon(Icons.book),
+            trailing: Icon(Icons.content_copy, color: Colors.blue),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/acceptedjobs");
             },
           ),
           ListTile(
-            title: Text("Data Historik Atm"),
-            trailing: Icon(Icons.history),
+            title: Text("Profil Pengguna"),
+            trailing: Icon(Icons.person, color: Colors.blue),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/historyatm");
+              Navigator.of(context).pushReplacementNamed("/profile");
             },
           ),
           Divider(),
           ListTile(
             title: Text("Keluar Aplikasi"),
-            trailing: Icon(Icons.donut_large),
+            trailing: Icon(Icons.exit_to_app, color: Colors.blue),
             onTap: () {
               authHandle.signOut(context);
             },

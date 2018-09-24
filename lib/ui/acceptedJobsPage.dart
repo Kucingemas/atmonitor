@@ -28,20 +28,24 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
-                  String title = jobs[position].data["location"].toString();
-                  String detail = jobs[position].data["problemDesc"].toString();
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text("$title"),
-                        subtitle: Text("$detail"),
+                  String location = jobs[position].data["location"].toString();
+                  String problem =
+                      jobs[position].data["problemDesc"].toString();
+                  String aptra = jobs[position].data["aptraTicket"].toString();
+                  String serial = jobs[position].data["serialNum"].toString();
+                  String status = jobs[position].data["status"].toString();
+                  String time = jobs[position].data["time"].toString();
+                  String wsid = jobs[position].data["wsid"].toString();
+
+                  return Card(
+                    child: Container(
+                      child: ListTile(
+                        title: Text("$location"),
+                        subtitle: Text("$problem"),
                         trailing: Icon(Icons.chevron_right),
                         onLongPress: () {},
                       ),
-                      Divider(
-                        height: 5.5,
-                      ),
-                    ],
+                    ),
                   );
                 });
           }),

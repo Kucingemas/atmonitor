@@ -1,7 +1,9 @@
 import 'package:atmonitor/ui/acceptedJobsPage.dart';
 import 'package:atmonitor/ui/availableJobsPage.dart';
 import 'package:atmonitor/ui/historyAtmPage.dart';
+import 'package:atmonitor/ui/jobDetailsPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
+import 'package:atmonitor/ui/profilePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,9 @@ main() {
       "/availablejobs": (BuildContext context) => AvailableJobsPage(),
       "/historyatm": (BuildContext context) => HistoryAtmPage(),
       "/login": (BuildContext context) => LoginPage(),
-      "/acceptedjobs": (BuildContext context) => AcceptedJobsPage()
+      "/acceptedjobs": (BuildContext context) => AcceptedJobsPage(),
+      "/profile": (BuildContext context) => ProfilePage(),
+      //"/details": (BuildContext context) => JobDetailsPage("","")
     },
   ));
 }

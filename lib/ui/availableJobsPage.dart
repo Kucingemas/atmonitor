@@ -1,4 +1,5 @@
 import 'package:atmonitor/jobsHandle.dart';
+import 'package:atmonitor/ui/jobDetailsPage.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,23 +29,35 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
-                  String title = jobs[position].data["location"].toString();
-                  String detail = jobs[position].data["problemDesc"].toString();
-                  return Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text("$title"),
-                        subtitle: Text("$detail"),
+                  String location = jobs[position].data["location"].toString();
+                  String problem =
+                      jobs[position].data["problemDesc"].toString();
+                  String aptra = jobs[position].data["aptraTicket"].toString();
+                  String serial = jobs[position].data["serialNum"].toString();
+                  String status = jobs[position].data["status"].toString();
+                  String time = jobs[position].data["time"].toString();
+                  String wsid = jobs[position].data["wsid"].toString();
+                  return Card(
+                    child: Container(
+                      child: ListTile(
+                        title: Text("$location"),
+                        subtitle: Text("$problem"),
                         trailing: Icon(Icons.chevron_right),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => JobDetailsPage(location,
+                                  problem, aptra, serial, time, status, wsid),
+                            ),
+                          );
+                        },
                         onLongPress: () {
                           longPressDetailShow(
-                              context, title, detail, jobs, position);
+                              context, location, problem, jobs, position);
                         },
                       ),
-                      Divider(
-                        height: 5.5,
-                      ),
-                    ],
+                    ),
                   );
                 });
           }),

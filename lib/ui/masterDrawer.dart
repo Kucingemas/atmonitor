@@ -25,7 +25,7 @@ class MasterDrawer extends StatelessWidget {
             trailing: Icon(Icons.work),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/joblist");
+              Navigator.of(context).pushReplacementNamed("/availablejobs");
             },
           ),
           ListTile(
@@ -33,7 +33,7 @@ class MasterDrawer extends StatelessWidget {
             trailing: Icon(Icons.book),
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/activejob");
+              Navigator.of(context).pushReplacementNamed("/acceptedjobs");
             },
           ),
           ListTile(

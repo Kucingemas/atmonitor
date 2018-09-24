@@ -1,7 +1,6 @@
 import 'package:atmonitor/authHandle.dart';
 import 'package:flutter/material.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -74,12 +73,6 @@ class LoginPageState extends State<LoginPage> {
                                 _kataSandiController.text.toString(),
                                 context);
                           },
-//                          onPressed: () {
-//                            Navigator.push(
-//                                context,
-//                                MaterialPageRoute(
-//                                    builder: (context) => JobListPage()));
-//                          },
                           child: Text(
                             "MASUK",
                             style: TextStyle(color: Colors.white),

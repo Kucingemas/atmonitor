@@ -1,6 +1,6 @@
-import 'package:atmonitor/ui/activeJobPage.dart';
+import 'package:atmonitor/ui/acceptedJobsPage.dart';
+import 'package:atmonitor/ui/availableJobsPage.dart';
 import 'package:atmonitor/ui/historyAtmPage.dart';
-import 'package:atmonitor/ui/jobListPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,23 +11,26 @@ main() {
     title: "ATMonitor",
     home: _getLandingPage(),
     routes: <String, WidgetBuilder>{
-      "/joblist": (BuildContext context) => JobListPage(),
+      "/availablejobs": (BuildContext context) => AvailableJobsPage(),
       "/historyatm": (BuildContext context) => HistoryAtmPage(),
       "/login": (BuildContext context) => LoginPage(),
-      "/activejob": (BuildContext context) => ActiveJobPage()
+      "/acceptedjobs": (BuildContext context) => AcceptedJobsPage()
     },
   ));
 }
 
+//check user if user has logged-in
 Widget _getLandingPage() {
   return StreamBuilder<FirebaseUser>(
     stream: FirebaseAuth.instance.onAuthStateChanged,
     builder: (BuildContext context, snapshot) {
       if (snapshot.hasData) {
         if (snapshot.data.providerData.length == 1) {
-          return snapshot.data.isEmailVerified ? JobListPage() : LoginPage();
+          return snapshot.data.isEmailVerified
+              ? AvailableJobsPage()
+              : LoginPage();
         } else {
-          return JobListPage();
+          return AvailableJobsPage();
         }
       } else {
         return LoginPage();

@@ -43,6 +43,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                         title: Text("$location"),
                         subtitle: Text("$problem"),
                         trailing: Icon(Icons.chevron_right),
+                        onTap: () {},
                         onLongPress: () {},
                       ),
                     ),

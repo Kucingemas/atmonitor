@@ -33,7 +33,7 @@ class MasterDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Pekerjaan Aktif"),
-            trailing: Icon(Icons.content_copy, color: Colors.blue),
+            trailing: Icon(Icons.assignment, color: Colors.blue),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/acceptedjobs");

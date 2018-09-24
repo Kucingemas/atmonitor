@@ -32,11 +32,6 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
                   String location = jobs[position].data["location"].toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();
-                  String aptra = jobs[position].data["aptraTicket"].toString();
-                  String serial = jobs[position].data["serialNum"].toString();
-                  String status = jobs[position].data["status"].toString();
-                  String time = jobs[position].data["time"].toString();
-                  String wsid = jobs[position].data["wsid"].toString();
                   return Card(
                     child: Container(
                       child: ListTile(
@@ -45,12 +40,12 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => JobDetailsPage(location,
-                                  problem, aptra, serial, time, status, wsid),
-                            ),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => JobDetailsPage(
+                                        jobs,
+                                        position,
+                                      )));
                         },
                         onLongPress: () {
                           longPressDetailShow(
@@ -64,9 +59,6 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
     );
   }
 
-  //on press, show...
-  pressDetailShow() {}
-
   //on long press, then show details
   longPressDetailShow(BuildContext context, String location, String problem,
       List<DocumentSnapshot> jobs, int position) {
@@ -77,17 +69,19 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
         Row(
           children: <Widget>[
             FlatButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("CLOSE")),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("TUTUP"),
+            ),
             FlatButton(
-                onPressed: () {
-                  jobsHandle.acceptJob(jobs, position);
-                  Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed("/acceptedjobs");
-                },
-                child: Text("ACCEPT"))
+              onPressed: () {
+                jobsHandle.acceptJob(jobs, position);
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+              },
+              child: Text("TERIMA"),
+            )
           ],
           mainAxisAlignment: MainAxisAlignment.end,
         )

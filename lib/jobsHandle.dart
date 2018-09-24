@@ -24,6 +24,7 @@ class JobsHandle {
                   ListTile(
                     title: Text("$title"),
                     subtitle: Text("$detail"),
+                    trailing: Icon(Icons.chevron_right),
                     onLongPress: () {
                       status == "NOT ACCEPTED"
                           ? detailShow(context, title, detail, jobs, position)

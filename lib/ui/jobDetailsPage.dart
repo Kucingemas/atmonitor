@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class JobDetailsPage extends StatelessWidget {
-  List<DocumentSnapshot> jobs;
-  int position;
+  final List<DocumentSnapshot> jobs;
+  final int position;
 
   JobDetailsPage(this.jobs, this.position);
 

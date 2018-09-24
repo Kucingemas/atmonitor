@@ -31,11 +31,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                   String location = jobs[position].data["location"].toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();
-                  String aptra = jobs[position].data["aptraTicket"].toString();
-                  String serial = jobs[position].data["serialNum"].toString();
-                  String status = jobs[position].data["status"].toString();
-                  String time = jobs[position].data["time"].toString();
-                  String wsid = jobs[position].data["wsid"].toString();
+
 
                   return Card(
                     child: Container(

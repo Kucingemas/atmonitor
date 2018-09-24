@@ -1,7 +1,6 @@
 import 'package:atmonitor/ui/acceptedJobsPage.dart';
 import 'package:atmonitor/ui/availableJobsPage.dart';
 import 'package:atmonitor/ui/historyAtmPage.dart';
-import 'package:atmonitor/ui/jobDetailsPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
 import 'package:atmonitor/ui/profilePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';

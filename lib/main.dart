@@ -2,7 +2,6 @@ import 'package:atmonitor/ui/activeJobPage.dart';
 import 'package:atmonitor/ui/historyAtmPage.dart';
 import 'package:atmonitor/ui/jobListPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
-import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ main() {
       "/joblist": (BuildContext context) => JobListPage(),
       "/historyatm": (BuildContext context) => HistoryAtmPage(),
       "/login": (BuildContext context) => LoginPage(),
-      "/activejob" : (BuildContext context) => ActiveJobPage()
+      "/activejob": (BuildContext context) => ActiveJobPage()
     },
   ));
 }

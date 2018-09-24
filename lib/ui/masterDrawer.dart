@@ -16,8 +16,9 @@ class MasterDrawer extends StatelessWidget {
             accountEmail: emailText(),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              child: Text("TS1"),
+              child: Icon(Icons.person),
             ),
+            accountName: Text(""),
           ),
           ListTile(
             title: Text("Daftar Pekerjaan"),

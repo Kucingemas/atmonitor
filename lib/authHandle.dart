@@ -15,8 +15,6 @@ class AuthHandle {
       //settingemail to shared preferences to pass into other screens
       sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString("useremail", user.email);
-      sharedPreferences.commit();
-
       Navigator.of(context).pop();
       Navigator.of(context).pushReplacementNamed("/joblist");
     }).catchError((e) {
@@ -26,9 +24,19 @@ class AuthHandle {
           Icons.info_outline,
           color: Colors.red,
         )
-        ..duration = Duration(seconds: 3)
+        ..duration = Duration(seconds: 2)
         ..leftBarIndicatorColor = Colors.red
         ..show(context);
+
+//      flushbar
+//        ..onStatusChanged = (FlushbarStatus status) {
+//          if (status == FlushbarStatus.DISMISSED) {
+//            print("a");
+//          } else {
+//            print("b");
+//          }
+//        }
+//        ..show(context);
     });
   }
 

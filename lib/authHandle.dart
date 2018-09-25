@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,27 +15,9 @@ class AuthHandle {
       sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString("useremail", user.email);
       Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed("/joblist");
+      Navigator.of(context).pushReplacementNamed("/availablejobs");
     }).catchError((e) {
-      Flushbar()
-        ..message = "nama pengguna atau kata sandi tidak cocok"
-        ..icon = Icon(
-          Icons.info_outline,
-          color: Colors.red,
-        )
-        ..duration = Duration(seconds: 2)
-        ..leftBarIndicatorColor = Colors.red
-        ..show(context);
-
-//      flushbar
-//        ..onStatusChanged = (FlushbarStatus status) {
-//          if (status == FlushbarStatus.DISMISSED) {
-//            print("a");
-//          } else {
-//            print("b");
-//          }
-//        }
-//        ..show(context);
+      print("error: $e");
     });
   }
 

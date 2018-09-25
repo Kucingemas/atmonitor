@@ -15,16 +15,13 @@ class MasterDrawer extends StatelessWidget {
           UserAccountsDrawerHeader(
             accountEmail: emailText(),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
               child: Icon(Icons.person),
             ),
             accountName: Text(""),
           ),
           ListTile(
             title: Text("Daftar Pekerjaan"),
-            trailing: Icon(
-              Icons.work,
-              color: Colors.blue,
+            leading: Icon(Icons.work
             ),
             onTap: () {
               Navigator.of(context).pop();
@@ -33,7 +30,7 @@ class MasterDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Pekerjaan Aktif"),
-            trailing: Icon(Icons.assignment, color: Colors.blue),
+            leading: Icon(Icons.assignment),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/acceptedjobs");
@@ -41,7 +38,7 @@ class MasterDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Profil Pengguna"),
-            trailing: Icon(Icons.person, color: Colors.blue),
+            leading: Icon(Icons.person),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/profile");
@@ -50,7 +47,7 @@ class MasterDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             title: Text("Keluar Aplikasi"),
-            trailing: Icon(Icons.exit_to_app, color: Colors.blue),
+            leading: Icon(Icons.exit_to_app),
             onTap: () {
               authHandle.signOut(context);
             },

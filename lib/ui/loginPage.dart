@@ -28,9 +28,9 @@ class LoginPageState extends State<LoginPage> {
             Padding(padding: EdgeInsets.all(20.0)),
             Image.asset(
               'images/radar-chart.png',
-              color: Colors.blue,
               height: 133.0,
               width: 200.0,
+              color: Colors.white70,
             ),
             Padding(padding: EdgeInsets.all(30.0)),
             Container(
@@ -61,10 +61,9 @@ class LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         FlatButton(
-                            onPressed: () => null,
+                            onPressed: () => print("a "),
                             child: Text(
                               "LUPA PASSWORD",
-                              style: TextStyle(color: Colors.blue),
                             )),
                         RaisedButton(
                           onPressed: () {
@@ -75,9 +74,7 @@ class LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             "MASUK",
-                            style: TextStyle(color: Colors.white),
                           ),
-                          color: Colors.blue,
                         ),
                       ],
                     ),

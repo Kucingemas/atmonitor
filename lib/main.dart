@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 main() {
   runApp(MaterialApp(
+    theme: ThemeData.dark(),
     debugShowCheckedModeBanner: false,
     title: "ATMonitor",
     home: _getLandingPage(),

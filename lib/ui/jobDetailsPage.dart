@@ -39,7 +39,7 @@ class JobDetailsPage extends StatelessWidget {
             Divider(),
             ListTile(
               title: Text("Jam"),
-              subtitle: Text("$time}"),
+              subtitle: Text("$time"),
             ),
             Divider(),
             ListTile(

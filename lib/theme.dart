@@ -15,9 +15,6 @@ ThemeData buildAtmTheme() {
     textTheme: _buildAtmTextTheme(base.textTheme),
     primaryTextTheme: _buildAtmTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildAtmTextTheme(base.accentTextTheme),
-    // TODO: Add the text themes (103)
-    // TODO: Add the icon themes (103)
-    // TODO: Decorate the inputs (103)
   );
 }
 

@@ -1,4 +1,5 @@
-import 'package:atmonitor/jobsHandle.dart';
+import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +71,10 @@ class JobDetailsPage extends StatelessWidget {
           Navigator.pop(context);
           Navigator.of(context).pushReplacementNamed("/acceptedjobs");
         },
-        child: Icon(Icons.assignment_turned_in),
+        child: Icon(
+          Icons.assignment_turned_in,
+          color: aWhite,
+        ),
       ),
     );
   }

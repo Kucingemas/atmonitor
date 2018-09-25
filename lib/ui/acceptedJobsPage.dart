@@ -1,4 +1,4 @@
-import 'package:atmonitor/jobsHandle.dart';
+import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
         title: Text("Pekerjaan Aktif"),
         centerTitle: true,
       ),
-      drawer: MasterDrawer(),
+      drawer: MasterDrawer(1),
       body: StreamBuilder(
           stream: jobsHandle.getAcceptedJobs(),
           builder:
@@ -31,7 +31,6 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                   String location = jobs[position].data["location"].toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();
-
 
                   return Card(
                     child: Container(

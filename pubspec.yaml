@@ -20,6 +20,19 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  fonts:
+    - family: WorkSans
+      fonts:
+        - asset: fonts/WorkSans-Black.ttf
+        - asset: fonts/WorkSans-Bold.ttf
+        - asset: fonts/WorkSans-ExtraBold.ttf
+        - asset: fonts/WorkSans-ExtraLight.ttf
+        - asset: fonts/WorkSans-Light.ttf
+        - asset: fonts/WorkSans-Medium.ttf
+        - asset: fonts/WorkSans-Regular.ttf
+        - asset: fonts/WorkSans-SemiBold.ttf
+        - asset: fonts/WorkSans-Thin.ttf
+
   uses-material-design: true
   assets:
   - images/radar-chart.png

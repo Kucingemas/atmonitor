@@ -1,4 +1,5 @@
-import 'package:atmonitor/authHandle.dart';
+import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/handlers/authHandle.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class LoginPageState extends State<LoginPage> {
               'images/radar-chart.png',
               height: 133.0,
               width: 200.0,
-              color: Colors.white70,
+              color: aBackGroundWhite,
             ),
             Padding(padding: EdgeInsets.all(30.0)),
             Container(

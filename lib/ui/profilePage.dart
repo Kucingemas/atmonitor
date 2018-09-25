@@ -14,7 +14,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text("Profil Pengguna"),
         centerTitle: true,
       ),
-      drawer: MasterDrawer(),
+      drawer: MasterDrawer(2),
     );
   }
 }

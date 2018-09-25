@@ -1,4 +1,4 @@
-import 'package:atmonitor/jobsHandle.dart';
+import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobDetailsPage.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,7 +19,7 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
         title: Text("Daftar Pekerjaan"),
         centerTitle: true,
       ),
-      drawer: MasterDrawer(),
+      drawer: MasterDrawer(0),
       body: StreamBuilder(
           stream: jobsHandle.getAvailableJobs(),
           builder:

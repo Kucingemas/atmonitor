@@ -1,58 +1,73 @@
 import 'dart:async';
 
-import 'package:atmonitor/authHandle.dart';
+import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/handlers/authHandle.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MasterDrawer extends StatelessWidget {
   final authHandle = AuthHandle();
+  int drawerIndex;
+
+  MasterDrawer(this.drawerIndex);
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountEmail: emailText(),
-            currentAccountPicture: CircleAvatar(
-              child: Icon(Icons.person),
+      child: ListTileTheme(
+        selectedColor: aOrange500,
+        iconColor: aBlue700,
+        textColor: aBlue700,
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountEmail: emailText(),
+              currentAccountPicture: CircleAvatar(
+                child: Icon(
+                  Icons.person,
+                  color: aWhite,
+                ),
+                backgroundColor: aOrange500,
+              ),
+              accountName: Text(""),
             ),
-            accountName: Text(""),
-          ),
-          ListTile(
-            title: Text("Daftar Pekerjaan"),
-            leading: Icon(Icons.work
+            ListTile(
+              title: Text("Daftar Pekerjaan"),
+              leading: Icon(Icons.work),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed("/availablejobs");
+              },
+              selected: drawerIndex == 0,
             ),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/availablejobs");
-            },
-          ),
-          ListTile(
-            title: Text("Pekerjaan Aktif"),
-            leading: Icon(Icons.assignment),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/acceptedjobs");
-            },
-          ),
-          ListTile(
-            title: Text("Profil Pengguna"),
-            leading: Icon(Icons.person),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/profile");
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: Text("Keluar Aplikasi"),
-            leading: Icon(Icons.exit_to_app),
-            onTap: () {
-              authHandle.signOut(context);
-            },
-          ),
-        ],
+            ListTile(
+              title: Text("Pekerjaan Aktif"),
+              leading: Icon(Icons.assignment),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+              },
+              selected: drawerIndex == 1,
+            ),
+            ListTile(
+              title: Text("Profil Pengguna"),
+              leading: Icon(Icons.person),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed("/profile");
+              },
+              selected: drawerIndex == 2,
+            ),
+            Divider(),
+            ListTile(
+              title: Text("Keluar Aplikasi"),
+              leading: Icon(Icons.exit_to_app),
+              onTap: () {
+                authHandle.signOut(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

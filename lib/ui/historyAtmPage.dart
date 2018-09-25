@@ -1,4 +1,3 @@
-import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:flutter/material.dart';
 
 class HistoryAtmPage extends StatefulWidget {
@@ -14,7 +13,6 @@ class _HistoryAtmPageState extends State<HistoryAtmPage> {
         title: Text("Data Historik"),
         centerTitle: true,
       ),
-      drawer: MasterDrawer(),
     );
   }
 }

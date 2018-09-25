@@ -1,4 +1,3 @@
-import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/handlers/authHandle.dart';
 import 'package:flutter/material.dart';
 
@@ -17,23 +16,19 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ATMonitor"),
-        centerTitle: true,
-      ),
       body: Container(
         alignment: Alignment.center,
         child: ListView(
           padding: const EdgeInsets.all(25.0),
           children: <Widget>[
-            Padding(padding: EdgeInsets.all(20.0)),
-            Image.asset(
-              'images/radar-chart.png',
-              height: 133.0,
-              width: 200.0,
-              color: aBackGroundWhite,
+            Padding(
+              padding: EdgeInsets.all(15.0),
             ),
-            Padding(padding: EdgeInsets.all(30.0)),
+            Image.asset(
+              'images/logobagus.png',
+              height: 250.0,
+              width: 250.0,
+            ),
             Container(
               child: Column(
                 children: <Widget>[

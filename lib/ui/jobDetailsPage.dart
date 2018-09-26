@@ -65,15 +65,19 @@ class JobDetailsPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           jobsHandle.acceptJob(jobs, position);
           Navigator.pop(context);
           Navigator.of(context).pushReplacementNamed("/acceptedjobs");
         },
-        child: Icon(
-          Icons.assignment_turned_in,
-          color: aWhite,
+        label: Text(
+          "Terima",
+          style: TextStyle(color: aBlue800),
+        ),
+        icon: Icon(
+          Icons.assignment_return,
+          color: aBlue800,
         ),
       ),
     );

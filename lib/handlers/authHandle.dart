@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +19,16 @@ class AuthHandle {
       Navigator.of(context).pushReplacementNamed("/availablejobs");
     }).catchError((e) {
       print("error: $e");
+      Flushbar()
+        ..message = "nama pengguna atau kata sandi salah!"
+        ..icon = Icon(
+          Icons.info_outline,
+          color: Colors.red,
+        )
+        ..duration = Duration(seconds: 3)
+        ..leftBarIndicatorColor = Colors.red
+        ..show(context);
+
     });
   }
 

@@ -31,6 +31,9 @@ TextTheme _buildAtmTextTheme(TextTheme base) {
           fontWeight: FontWeight.w400,
           fontSize: 14.0,
         ),
+        subhead: base.caption.copyWith(
+          color: aBlue800
+        )
       )
       .apply(
         fontFamily: 'WorkSans',

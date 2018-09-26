@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MasterDrawer extends StatelessWidget {
   final authHandle = AuthHandle();
-  int drawerIndex;
+  final int drawerIndex;
 
   MasterDrawer(this.drawerIndex);
 
@@ -22,13 +22,6 @@ class MasterDrawer extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountEmail: emailText(),
-              currentAccountPicture: CircleAvatar(
-                child: Icon(
-                  Icons.person,
-                  color: aWhite,
-                ),
-                backgroundColor: aOrange500,
-              ),
               accountName: Text(""),
             ),
             ListTile(
@@ -49,6 +42,7 @@ class MasterDrawer extends StatelessWidget {
               },
               selected: drawerIndex == 1,
             ),
+            Divider(),
             ListTile(
               title: Text("Profil Pengguna"),
               leading: Icon(Icons.person),

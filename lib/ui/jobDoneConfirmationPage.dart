@@ -1,18 +1,27 @@
 import 'dart:io';
 
 import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/handlers/jobsHandle.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class JobDoneConfirmationPage extends StatefulWidget {
+  final List<DocumentSnapshot> jobs;
+  final int position;
+
+  JobDoneConfirmationPage(this.jobs, this.position);
+
   @override
   _JobDoneConfirmationPageState createState() =>
       _JobDoneConfirmationPageState();
 }
 
 class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
+  String solusi = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final jobsHandle = JobsHandle();
   File pictureTaken;
 
   @override
@@ -34,14 +43,18 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                 title: Form(
                   key: formKey,
                   child: TextFormField(
+                    onSaved: (value) {
+                      solusi = value;
+                    },
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
                     decoration: InputDecoration(
                         labelText: "Solusi Yang Dikerjakan:",
                         border: OutlineInputBorder()),
                     initialValue: "",
-                    validator: (value) =>
-                        value.isEmpty ? "Isi solusi yang dikerjakan" : null,
+                    validator: (value) => value.isEmpty || value == ""
+                        ? "Isi solusi yang dikerjakan"
+                        : null,
                   ),
                 ),
               ),
@@ -87,7 +100,14 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           ),
           label: Text("Konfirmasi", style: TextStyle(color: aBlue800)),
           onPressed: () {
-            formKey.currentState.validate() ? null : null;
+            if (formKey.currentState.validate()) {
+              formKey.currentState.save();
+              jobsHandle.finishJob(
+                  widget.jobs, widget.position, pictureTaken, solusi);
+              formKey.currentState.reset();
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+            }
           }),
     );
   }

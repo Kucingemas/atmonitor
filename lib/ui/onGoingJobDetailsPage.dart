@@ -82,7 +82,8 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => JobDoneConfirmationPage()));
+                        builder: (context) => JobDoneConfirmationPage(
+                            widget.jobs, widget.position)));
               },
               icon: Icon(
                 Icons.assignment_turned_in,

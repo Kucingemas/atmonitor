@@ -5,6 +5,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  firebase_storage:
   image_picker:
   camera:
   fluttertoast: ^2.0.7

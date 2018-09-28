@@ -1,4 +1,5 @@
 import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/ui/jobDoneConfirmationPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +10,12 @@ class OnGoingJobDetailsPage extends StatefulWidget {
   OnGoingJobDetailsPage(this.jobs, this.position);
 
   @override
-  onGoingJobDetailsPageState createState() {
-    return new onGoingJobDetailsPageState();
+  OnGoingJobDetailsPageState createState() {
+    return new OnGoingJobDetailsPageState();
   }
 }
 
-class onGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
+class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
   @override
   Widget build(BuildContext context) {
     String location = widget.jobs[widget.position].data["location"].toString();
@@ -77,7 +78,12 @@ class onGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
           children: <Widget>[
             FloatingActionButton.extended(
               heroTag: null,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => JobDoneConfirmationPage()));
+              },
               icon: Icon(
                 Icons.assignment_turned_in,
                 color: aBlue800,

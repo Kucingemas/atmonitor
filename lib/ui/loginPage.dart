@@ -12,10 +12,12 @@ class LoginPageState extends State<LoginPage> {
   var _namaPenggunaController = TextEditingController();
   var _kataSandiController = TextEditingController();
   final authHandle = AuthHandle();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: Container(
         alignment: Alignment.center,
         child: ListView(
@@ -66,7 +68,8 @@ class LoginPageState extends State<LoginPage> {
                             authHandle.signIn(
                                 _namaPenggunaController.text.toString(),
                                 _kataSandiController.text.toString(),
-                                context);
+                                context,
+                                scaffoldKey);
                           },
                           child: Text(
                             "MASUK",

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +6,8 @@ class AuthHandle {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   SharedPreferences sharedPreferences;
 
-  signIn(String email, String password, BuildContext context) async {
+  signIn(String email, String password, BuildContext context,
+      GlobalKey<ScaffoldState> key) async {
     this
         ._auth
         .signInWithEmailAndPassword(email: email, password: password)
@@ -19,16 +19,12 @@ class AuthHandle {
       Navigator.of(context).pushReplacementNamed("/availablejobs");
     }).catchError((e) {
       print("error: $e");
-      Flushbar()
-        ..message = "nama pengguna atau kata sandi salah!"
-        ..icon = Icon(
-          Icons.info_outline,
-          color: Colors.red,
-        )
-        ..duration = Duration(seconds: 3)
-        ..leftBarIndicatorColor = Colors.red
-        ..show(context);
-
+      key.currentState.showSnackBar(SnackBar(
+        content: Text(
+          "Nama Pengguna Atau Kata Sandi Salah!",
+        ),
+        duration: Duration(milliseconds: 750),
+      ));
     });
   }
 

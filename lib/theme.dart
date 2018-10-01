@@ -21,20 +21,17 @@ ThemeData buildAtmTheme() {
 TextTheme _buildAtmTextTheme(TextTheme base) {
   return base
       .copyWith(
-        headline: base.headline.copyWith(
-          fontWeight: FontWeight.w500,
-        ),
-        title: base.title.copyWith(
-          fontSize: 18.0,
-        ),
-        caption: base.caption.copyWith(
-          fontWeight: FontWeight.w400,
-          fontSize: 14.0,
-        ),
-        subhead: base.caption.copyWith(
-          color: aBlue800
-        )
-      )
+          headline: base.headline.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
+          title: base.title.copyWith(
+            fontSize: 18.0,
+          ),
+          caption: base.caption.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 14.0,
+          ),
+          subhead: base.caption.copyWith(color: aBlue800))
       .apply(
         fontFamily: 'WorkSans',
       );

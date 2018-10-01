@@ -4,7 +4,7 @@ description: A new Flutter application.
 dependencies:
   flutter:
     sdk: flutter
-
+  uuid:
   firebase_storage:
   image_picker:
   camera:

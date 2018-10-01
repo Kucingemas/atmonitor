@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class JobsHandle {
   Firestore db = Firestore.instance;
@@ -39,9 +40,13 @@ class JobsHandle {
   //update status to finish
   finishJob(List<DocumentSnapshot> jobs, int position, File image,
       String solution) async {
+    Uuid uuid = Uuid();
     //upload image to storage
     StorageUploadTask uploadTask = ref
-        .child("buktiGambarSelesai/"+image.lastModifiedSync().toString())
+        .child("buktiGambarSelesai/" +
+            image.lastModifiedSync().toString() +
+            "_" +
+            uuid.v1().toString())
         .putFile(image);
     //getting download url
     Uri location = (await uploadTask.future).downloadUrl;

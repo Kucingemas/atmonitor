@@ -20,7 +20,6 @@ main() {
       "/login": (BuildContext context) => LoginPage(),
       "/acceptedjobs": (BuildContext context) => AcceptedJobsPage(),
       "/profile": (BuildContext context) => ProfilePage(),
-      //"/details": (BuildContext context) => JobDetailsPage("","")
     },
   ));
 }

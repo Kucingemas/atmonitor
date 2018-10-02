@@ -66,12 +66,12 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           Divider(),
           ListTile(
             title: Text("Unggah Bukti Gambar"),
-            trailing: InkWell(
-              child: Icon(
+            trailing: IconButton(
+              icon: Icon(
                 Icons.camera_alt,
                 color: aBlue800,
               ),
-              onTap: () {
+              onPressed: () {
                 takePicture(context, ImageSource.camera);
               },
             ),

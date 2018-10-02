@@ -1,29 +1,53 @@
 import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/handlers/jobsHandle.dart';
+import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class JobDetailsPage extends StatelessWidget {
+class JobDetailsPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
   final int position;
 
   JobDetailsPage(this.jobs, this.position);
 
   @override
+  JobDetailsPageState createState() {
+    return new JobDetailsPageState();
+  }
+}
+
+class JobDetailsPageState extends State<JobDetailsPage> {
+  @override
   Widget build(BuildContext context) {
     JobsHandle jobsHandle = JobsHandle();
-    String location = jobs[position].data["location"].toString();
-    String problem = jobs[position].data["problemDesc"].toString();
-    String aptra = jobs[position].data["aptraTicket"].toString();
-    String serial = jobs[position].data["serialNum"].toString();
-    String status = jobs[position].data["status"].toString();
-    String time = jobs[position].data["time"].toString();
-    String wsid = jobs[position].data["wsid"].toString();
+    String location = widget.jobs[widget.position].data["location"].toString();
+    String problem =
+        widget.jobs[widget.position].data["problemDesc"].toString();
+    String aptra = widget.jobs[widget.position].data["aptraTicket"].toString();
+    String serial = widget.jobs[widget.position].data["serialNum"].toString();
+    String status = widget.jobs[widget.position].data["status"].toString();
+    String time = widget.jobs[widget.position].data["time"].toString();
+    String wsid = widget.jobs[widget.position].data["wsid"].toString();
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Detil Pekerjaan"),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.history,
+              color: aWhite,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          JobHistoryPage(widget.jobs, widget.position)));
+            },
+          )
+        ],
       ),
       body: Container(
         child: ListView(
@@ -67,7 +91,7 @@ class JobDetailsPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          jobsHandle.acceptJob(jobs, position);
+          jobsHandle.acceptJob(widget.jobs, widget.position);
           Navigator.pop(context);
           Navigator.of(context).pushReplacementNamed("/acceptedjobs");
         },

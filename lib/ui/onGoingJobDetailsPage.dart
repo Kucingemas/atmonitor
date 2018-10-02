@@ -1,5 +1,6 @@
 import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/ui/jobDoneConfirmationPage.dart';
+import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,21 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
         appBar: AppBar(
           title: Text("Detil Pekerjaan"),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.history,
+                color: aWhite,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            JobHistoryPage(widget.jobs, widget.position)));
+              },
+            )
+          ],
         ),
         body: Container(
           child: ListView(

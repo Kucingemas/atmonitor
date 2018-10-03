@@ -5,6 +5,7 @@ dependencies:
   flutter:
     sdk: flutter
   uuid:
+  intl:
   firebase_storage:
   image_picker:
   camera:

@@ -3,6 +3,7 @@ import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class JobDetailsPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
@@ -26,7 +27,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     String aptra = widget.jobs[widget.position].data["aptraTicket"].toString();
     String serial = widget.jobs[widget.position].data["serialNum"].toString();
     String status = widget.jobs[widget.position].data["status"].toString();
-    String time = widget.jobs[widget.position].data["time"].toString();
+    String time = DateFormat("dd-MM-yyyy hh:mm")
+        .format(widget.jobs[widget.position].data["time"])
+        .toString();
     String wsid = widget.jobs[widget.position].data["wsid"].toString();
 
     return Scaffold(
@@ -63,7 +66,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             ),
             Divider(),
             ListTile(
-              title: Text("Jam"),
+              title: Text("Waktu"),
               subtitle: Text("$time"),
             ),
             Divider(),

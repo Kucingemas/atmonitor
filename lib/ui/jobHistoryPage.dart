@@ -1,6 +1,8 @@
 import 'package:atmonitor/handlers/historyHandle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 class JobHistoryPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
@@ -30,9 +32,10 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
-                  String date = jobs[position].data["time"].toString();
+                  String date =  DateFormat("dd-MM-yyyy hh:mm").format(
+                      jobs[position].data["time"]).toString();
                   String problem =
-                      jobs[position].data["problemDesc"].toString();
+                  jobs[position].data["problemDesc"].toString();
                   String solution = jobs[position].data["solution"].toString();
                   String aptra = jobs[position].data["aptraTicket"].toString();
                   return ExpansionTile(

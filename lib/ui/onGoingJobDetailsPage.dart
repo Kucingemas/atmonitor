@@ -1,6 +1,7 @@
 import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/ui/jobDoneConfirmationPage.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
+import 'package:atmonitor/ui/needHelpPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -118,7 +119,10 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             ),
             FloatingActionButton.extended(
               heroTag: null,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NeedHelpPage()));
+              },
               icon: Icon(
                 Icons.person,
                 color: aBlue800,

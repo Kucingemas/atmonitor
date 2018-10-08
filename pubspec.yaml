@@ -4,6 +4,7 @@ description: A new Flutter application.
 dependencies:
   flutter:
     sdk: flutter
+  material_search:
   uuid:
   intl:
   firebase_storage:

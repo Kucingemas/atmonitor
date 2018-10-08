@@ -15,7 +15,6 @@ main() {
     home: getLandingPage(),
     routes: <String, WidgetBuilder>{
       "/availablejobs": (BuildContext context) => AvailableJobsPage(),
-      //"/historyatm": (BuildContext context) => HistoryAtmPage(),
       "/login": (BuildContext context) => LoginPage(),
       "/acceptedjobs": (BuildContext context) => AcceptedJobsPage(),
       "/profile": (BuildContext context) => ProfilePage(),

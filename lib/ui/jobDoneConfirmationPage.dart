@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/handlers/jobsHandle.dart';
+import 'package:atmonitor/ui/partSearchDelegatesPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,11 +19,12 @@ class JobDoneConfirmationPage extends StatefulWidget {
 }
 
 class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
-  String solusi = "";
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final jobsHandle = JobsHandle();
   File pictureTaken;
+  List<String> changedPartsSelected = List<String>();
+  String solution = "";
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                   key: formKey,
                   child: TextFormField(
                     onSaved: (value) {
-                      solusi = value;
+                      solution = value;
                     },
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
@@ -61,7 +63,47 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(7.0),
+          ),
+          Divider(),
+          ListTile(
+            title: Text("Suku Cadang Yang Diganti"),
+            subtitle: Text("daftar suku cadang: "),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.add_circle,
+                color: aBlue800,
+              ),
+              onPressed: () async {
+                showSearch(
+                        context: context, delegate: PartsSearchDelegatesPage())
+                    .then((part) {
+                  part == null
+                      ? debugPrint("part kosong tidak terlempar")
+                      : changedPartsSelected.add(part.toString());
+                });
+              },
+            ),
+          ),
+          ListView.builder(
+            physics: ClampingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: changedPartsSelected.length,
+            itemBuilder: (BuildContext context, int position) {
+              return ListTile(
+                  title: Text(changedPartsSelected[position].toString()),
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.remove_circle,
+                      color: Colors.redAccent,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        changedPartsSelected.removeAt(position);
+                      });
+                    },
+                  ));
+            },
           ),
           Divider(),
           ListTile(
@@ -90,7 +132,10 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                   height: 300.0,
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.topCenter,
-                )
+                ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -103,7 +148,7 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
             if (formKey.currentState.validate()) {
               formKey.currentState.save();
               jobsHandle.finishJob(
-                  widget.jobs, widget.position, pictureTaken, solusi);
+                  widget.jobs, widget.position, pictureTaken, solution);
               formKey.currentState.reset();
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/acceptedjobs");

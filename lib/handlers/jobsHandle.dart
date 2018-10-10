@@ -37,6 +37,16 @@ class JobsHandle {
     });
   }
 
+  //update status to need help
+  helpJob(List<DocumentSnapshot> jobs, int position) {
+    db.runTransaction((Transaction transaction) async {
+      DocumentSnapshot documentSnapshot =
+          await transaction.get(jobs[position].reference);
+      await transaction
+          .update(documentSnapshot.reference, {"status": "NEED HELP"});
+    });
+  }
+
   //update status to finish
   finishJob(List<DocumentSnapshot> jobs, int position, File image,
       String solution) async {

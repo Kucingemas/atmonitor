@@ -36,34 +36,30 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
       ),
       body: ListView(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10.0),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+          ),
+          ListTile(
+            title: Form(
+              key: formKey,
+              child: TextFormField(
+                onSaved: (value) {
+                  solution = value;
+                },
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                    labelText: "Solusi Yang Dikerjakan:",
+                    border: OutlineInputBorder()),
+                initialValue: "",
+                validator: (value) => value.isEmpty || value == ""
+                    ? "Isi solusi yang dikerjakan"
+                    : null,
               ),
-              ListTile(
-                title: Form(
-                  key: formKey,
-                  child: TextFormField(
-                    onSaved: (value) {
-                      solution = value;
-                    },
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                        labelText: "Solusi Yang Dikerjakan:",
-                        border: OutlineInputBorder()),
-                    initialValue: "",
-                    validator: (value) => value.isEmpty || value == ""
-                        ? "Isi solusi yang dikerjakan"
-                        : null,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           Padding(
-            padding: EdgeInsets.all(7.0),
+            padding: EdgeInsets.all(10.0),
           ),
           Divider(),
           ListTile(
@@ -85,26 +81,41 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
               },
             ),
           ),
-          ListView.builder(
-            physics: ClampingScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: changedPartsSelected.length,
-            itemBuilder: (BuildContext context, int position) {
-              return ListTile(
-                  title: Text(changedPartsSelected[position].toString()),
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.remove_circle,
-                      color: Colors.redAccent,
+          changedPartsSelected.isEmpty
+              ? Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10.0,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        changedPartsSelected.removeAt(position);
-                      });
-                    },
-                  ));
-            },
-          ),
+                    Text(
+                      "tidak ada suku cadang yang diganti",
+                      textAlign: TextAlign.center,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                    )
+                  ],
+                )
+              : ListView.builder(
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: changedPartsSelected.length,
+                  itemBuilder: (BuildContext context, int position) {
+                    return ListTile(
+                        title: Text(changedPartsSelected[position].toString()),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.remove_circle,
+                            color: Colors.redAccent,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              changedPartsSelected.removeAt(position);
+                            });
+                          },
+                        ));
+                  },
+                ),
           Divider(),
           ListTile(
             title: Text("Unggah Bukti Gambar"),

@@ -120,8 +120,11 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NeedHelpPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            NeedHelpPage(widget.position, widget.jobs)));
               },
               icon: Icon(
                 Icons.person,

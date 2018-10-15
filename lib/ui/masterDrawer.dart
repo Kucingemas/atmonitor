@@ -22,7 +22,7 @@ class MasterDrawer extends StatelessWidget {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountEmail: emailText(),
-              accountName: Text(""),
+              accountName: nameText(),
             ),
             ListTile(
               title: Text("Daftar Pekerjaan"),
@@ -65,26 +65,40 @@ class MasterDrawer extends StatelessWidget {
       ),
     );
   }
-}
 
-//get email from login
-Future<SharedPreferences> getEmail() async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  return sharedPreferences;
-}
+  Future<SharedPreferences> getSp() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences;
+  }
 
 //build the text widget after getting email
-Widget emailText() {
-  SharedPreferences sharedPreferences;
-  return FutureBuilder(
-    future: getEmail(),
-    builder: (BuildContext context, AsyncSnapshot snapshot) {
-      if (snapshot.hasData) {
-        sharedPreferences = snapshot.data;
-        return Text("${sharedPreferences.get("useremail")}");
-      } else {
-        return Text("");
-      }
-    },
-  );
+  Widget emailText() {
+    SharedPreferences sharedPreferences;
+    return FutureBuilder(
+      future: getSp(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          sharedPreferences = snapshot.data;
+          return Text("${sharedPreferences.get("useremail")}");
+        } else {
+          return Text("");
+        }
+      },
+    );
+  }
+
+  Widget nameText() {
+    SharedPreferences sharedPreferences;
+    return FutureBuilder(
+      future: getSp(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          sharedPreferences = snapshot.data;
+          return Text("${sharedPreferences.get("username")}");
+        } else {
+          return Text("");
+        }
+      },
+    );
+  }
 }

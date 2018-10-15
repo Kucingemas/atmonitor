@@ -16,6 +16,7 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
   final GlobalKey<FormState> formKeySolusi = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyMasalah = GlobalKey<FormState>();
   String solution = "";
+  String problem = "";
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
                 key: formKeyMasalah,
                 child: TextFormField(
                   onSaved: (value) {
-                    solution = value;
+                    problem = value;
                   },
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
@@ -81,10 +82,9 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
         ),
         label: Text("Minta Bantuan", style: TextStyle(color: aBlue800)),
         onPressed: () {
-          if (formKeySolusi.currentState.validate()) {
-            if (formKeyMasalah.currentState.validate()) {
-              print("a");
-            }
+          if (formKeySolusi.currentState.validate() &&
+              formKeyMasalah.currentState.validate()) {
+            print("a");
           }
         },
       ),

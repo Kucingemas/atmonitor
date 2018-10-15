@@ -5,13 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class HistoryHandle {
   final List<DocumentSnapshot> jobs;
   final int position;
-  Firestore db = Firestore.instance;
 
   HistoryHandle(this.jobs, this.position);
 
   getFixHistory() {
-    print(jobs[position].data["time"]);
-    Future<QuerySnapshot> future = db
+    Future<QuerySnapshot> getJobs = Firestore.instance
         .collection("jobs")
         .where("status", isEqualTo: "FINISHED")
         .where("location",
@@ -21,6 +19,6 @@ class HistoryHandle {
         .getDocuments()
         .catchError((error) => print("$error"));
 
-    return future;
+    return getJobs;
   }
 }

@@ -3,18 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthHandle {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  SharedPreferences sharedPreferences;
+  UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  SharedPreferences sp;
 
   signIn(String email, String password, BuildContext context,
       GlobalKey<ScaffoldState> key) async {
     this
-        ._auth
+        .auth
         .signInWithEmailAndPassword(email: email, password: password)
         .then((user) async {
-      //settingemail to shared preferences to pass into other screens
-      sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString("useremail", user.email);
+
+      sp = await SharedPreferences.getInstance();
+      sp.setString("userid", user.uid);
+      sp.setString("useremail", user.email);
+      sp.setString("username", user.displayName);
+      sp.setString("userphoto", user.photoUrl);
+      sp.setString("userphone", user.phoneNumber);
       Navigator.of(context).pop();
       Navigator.of(context).pushReplacementNamed("/availablejobs");
     }).catchError((e) {
@@ -29,7 +34,7 @@ class AuthHandle {
   }
 
   signOut(BuildContext context) {
-    this._auth.signOut();
+    this.auth.signOut();
     Navigator.of(context).pop();
     Navigator.of(context).pushReplacementNamed("/login");
   }

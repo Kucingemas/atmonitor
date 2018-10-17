@@ -4,6 +4,7 @@ description: A new Flutter application.
 dependencies:
   flutter:
     sdk: flutter
+  cached_network_image:
   material_search:
   uuid:
   intl:

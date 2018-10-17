@@ -1,8 +1,11 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/handlers/profileHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,10 +17,13 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<FormState> formKeyNama = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyEmail = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyHandphone = GlobalKey<FormState>();
+  ProfileHandle profileHandle = ProfileHandle();
   bool canEdit = false;
   String nama = "";
   String email = "";
   String handPhone = "";
+  String photo ="";
+  File pictureChosen;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +39,9 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.all(10.0),
             ),
-            Center(
-              child: CircleAvatar(
-                radius: 70.0,
-              ),
-            ),
+            profilePhotoCircle(),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(20.0),
             ),
             Row(
               children: <Widget>[
@@ -70,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
                 ),
-                Text(" Nomor Handphone: "),
+                Text("Nomor Handphone: "),
               ],
             ),
             phoneListTile(),
@@ -80,7 +82,14 @@ class _ProfilePageState extends State<ProfilePage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           setState(() {
-            canEdit == false ? canEdit = true : canEdit = false;
+            if (canEdit == false) {
+              canEdit = true;
+            } else {
+              formKeyNama.currentState.save();
+              formKeyHandphone.currentState.save();
+              profileHandle.updateProfile(nama, handPhone);
+              canEdit = false;
+            }
           });
         },
         icon: canEdit == false
@@ -105,14 +114,36 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<SharedPreferences> getSp() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences;
+  Widget profilePhotoCircle() {
+    return FutureBuilder(
+      future: profileHandle.getSp(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) return Center();
+        SharedPreferences sharedPreferences = snapshot.data;
+        return Center(
+          child: CircleAvatar(
+            child: InkWell(
+              onTap: () {
+                choosePicture(context, ImageSource.gallery);
+              },
+            ),
+            backgroundColor: aOrange500,
+            backgroundImage: sharedPreferences.getString("userphoto") == "" ||
+                    sharedPreferences.getString("userphoto") == null
+                ? CachedNetworkImageProvider(
+                    "https://i.pinimg.com/originals/f5/7e/00/f57e00306f3183cc39fa919fec41418b.jpg")
+                : CachedNetworkImageProvider(
+                    sharedPreferences.getString("userphoto")),
+            radius: 70.0,
+          ),
+        );
+      },
+    );
   }
 
   Widget nameListTile() {
     return FutureBuilder(
-        future: getSp(),
+        future: profileHandle.getSp(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) return Center();
           SharedPreferences sharedPreference = snapshot.data;
@@ -138,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget emailListTile() {
     return FutureBuilder(
-      future: getSp(),
+      future: profileHandle.getSp(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) return Center();
         SharedPreferences sharedPreference = snapshot.data;
@@ -146,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Form(
               key: formKeyEmail,
               child: TextFormField(
-                enabled: canEdit == false ? false : true,
+                enabled: false,
                 onSaved: (value) {
                   email = value;
                 },
@@ -165,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget phoneListTile() {
     return FutureBuilder(
-      future: getSp(),
+      future: profileHandle.getSp(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) return Center();
         SharedPreferences sharedPreference = snapshot.data;
@@ -188,5 +219,13 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       },
     );
+  }
+
+  void choosePicture(BuildContext context, ImageSource imageSource) {
+    ImagePicker.pickImage(source: imageSource).then((File image) {
+      setState(() {
+        profileHandle.updatePicture(image);
+      });
+    });
   }
 }

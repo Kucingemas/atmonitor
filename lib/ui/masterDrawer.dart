@@ -1,13 +1,14 @@
-import 'dart:async';
-
 import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/handlers/authHandle.dart';
+import 'package:atmonitor/handlers/profileHandle.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MasterDrawer extends StatelessWidget {
   final authHandle = AuthHandle();
   final int drawerIndex;
+  ProfileHandle profileHandle = ProfileHandle();
 
   MasterDrawer(this.drawerIndex);
 
@@ -21,7 +22,8 @@ class MasterDrawer extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountEmail: emailText(),
+              currentAccountPicture: profilePhotoCircle(),
+              accountEmail: phoneText(),
               accountName: nameText(),
             ),
             ListTile(
@@ -66,20 +68,37 @@ class MasterDrawer extends StatelessWidget {
     );
   }
 
-  Future<SharedPreferences> getSp() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences;
-  }
-
-//build the text widget after getting email
-  Widget emailText() {
+  Widget profilePhotoCircle() {
     SharedPreferences sharedPreferences;
     return FutureBuilder(
-      future: getSp(),
+      future: profileHandle.getSp(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           sharedPreferences = snapshot.data;
-          return Text("${sharedPreferences.get("useremail")}");
+          return CircleAvatar(
+            backgroundImage: sharedPreferences.getString("userphoto") == "" ||
+                sharedPreferences.getString("userphoto") == null
+                ? CachedNetworkImageProvider(
+                "https://i.pinimg.com/originals/f5/7e/00/f57e00306f3183cc39fa919fec41418b.jpg")
+                : CachedNetworkImageProvider(
+                sharedPreferences.getString("userphoto")),
+          );
+        }
+        else
+          return Center();
+      },
+    );
+  }
+
+//build the text widget after getting email
+  Widget phoneText() {
+    SharedPreferences sharedPreferences;
+    return FutureBuilder(
+      future: profileHandle.getSp(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          sharedPreferences = snapshot.data;
+          return Text("${sharedPreferences.get("userphone")}");
         } else {
           return Text("");
         }
@@ -90,7 +109,7 @@ class MasterDrawer extends StatelessWidget {
   Widget nameText() {
     SharedPreferences sharedPreferences;
     return FutureBuilder(
-      future: getSp(),
+      future: profileHandle.getSp(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           sharedPreferences = snapshot.data;

@@ -52,44 +52,46 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             )
           ],
         ),
-        body: Container(
-          child: ListView(
-            children: <Widget>[
-              ListTile(
-                title: Text("Lokasi"),
-                subtitle: Text("$location"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Detil Masalah"),
-                subtitle: Text("$problem"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Waktu"),
-                subtitle: Text("$time"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("APTRA ID"),
-                subtitle: Text("$aptra"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Serial Number"),
-                subtitle: Text("$serial"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("WSID"),
-                subtitle: Text("$wsid"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Status"),
-                subtitle: Text("$status"),
-              ),
-            ],
+        body: Card(
+          child: Container(
+            child: ListView(
+              children: <Widget>[
+                ListTile(
+                  title: Text("Lokasi"),
+                  subtitle: Text("$location"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Detil Masalah"),
+                  subtitle: Text("$problem"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Waktu"),
+                  subtitle: Text("$time"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("APTRA ID"),
+                  subtitle: Text("$aptra"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Serial Number"),
+                  subtitle: Text("$serial"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("WSID"),
+                  subtitle: Text("$wsid"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Status"),
+                  subtitle: Text("$status"),
+                ),
+              ],
+            ),
           ),
         ),
         floatingActionButton: Column(

@@ -1,9 +1,9 @@
 import 'package:atmonitor/colors.dart';
 import 'package:atmonitor/handlers/authHandle.dart';
 import 'package:atmonitor/handlers/profileHandle.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class MasterDrawer extends StatelessWidget {
   final authHandle = AuthHandle();
@@ -77,14 +77,13 @@ class MasterDrawer extends StatelessWidget {
           sharedPreferences = snapshot.data;
           return CircleAvatar(
             backgroundImage: sharedPreferences.getString("userphoto") == "" ||
-                sharedPreferences.getString("userphoto") == null
+                    sharedPreferences.getString("userphoto") == null
                 ? CachedNetworkImageProvider(
-                "https://i.pinimg.com/originals/f5/7e/00/f57e00306f3183cc39fa919fec41418b.jpg")
+                    "https://i.pinimg.com/originals/f5/7e/00/f57e00306f3183cc39fa919fec41418b.jpg")
                 : CachedNetworkImageProvider(
-                sharedPreferences.getString("userphoto")),
+                    sharedPreferences.getString("userphoto")),
           );
-        }
-        else
+        } else
           return Center();
       },
     );

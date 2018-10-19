@@ -49,7 +49,6 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                             title: ExpansionTile(
                               initiallyExpanded: true,
                               title: Text("$date"),
-                              trailing: Icon(Icons.keyboard_arrow_down),
                               children: <Widget>[
                                 ListTile(
                                   title: Text("Detil Masalah"),

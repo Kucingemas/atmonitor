@@ -43,58 +43,56 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     children: <Widget>[
-                      ListTile(
-                        title: ExpansionTile(
-                          initiallyExpanded: true,
-                          title: Text("$date"),
-                          trailing: Icon(Icons.keyboard_arrow_down),
-                          children: <Widget>[
-                            ListTile(
-                              title: Text("Detil Masalah"),
-                              subtitle: Text("$problem"),
+                      Card(
+                        child: Container(
+                          child: ListTile(
+                            title: ExpansionTile(
+                              initiallyExpanded: true,
+                              title: Text("$date"),
+                              trailing: Icon(Icons.keyboard_arrow_down),
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text("Detil Masalah"),
+                                  subtitle: Text("$problem"),
+                                ),
+                                Divider(),
+                                ListTile(
+                                  title: Text("Solusi"),
+                                  subtitle: Text("$solution"),
+                                ),
+                                Divider(),
+                                ListTile(
+                                  title: Text("APTRA ID"),
+                                  subtitle: Text("$aptra"),
+                                ),
+                                Divider(),
+                                parts == null
+                                    ? ListTile(
+                                        title: Text(
+                                            "Tidak Ada Suku Cadang Yang Diganti"),
+                                      )
+                                    : ExpansionTile(
+                                        title: Text("Suku Cadang Yang Diganti"),
+                                        children: <Widget>[
+                                          ListView.builder(
+                                              physics: ClampingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: parts.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int position) {
+                                                return ListTile(
+                                                  title: Text(
+                                                      "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}\n"),
+                                                );
+                                              }),
+                                        ],
+                                      )
+                              ],
                             ),
-                            Divider(),
-                            ListTile(
-                              title: Text("Solusi"),
-                              subtitle: Text("$solution"),
-                            ),
-                            Divider(),
-                            ListTile(
-                              title: Text("APTRA ID"),
-                              subtitle: Text("$aptra"),
-                            ),
-                            Divider(),
-                            parts == null
-                                ? ExpansionTile(
-                                    title: Text("Suku Cadang Yang Diganti"),
-                                    children: <Widget>[
-                                      Text(
-                                          "tidak ada suku cadang yang diganti"),
-                                      Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                      ),
-                                    ],
-                                  )
-                                : ExpansionTile(
-                                    title: Text("Suku Cadang Yang Diganti"),
-                                    children: <Widget>[
-                                      ListView.builder(
-                                          physics: ClampingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: parts.length,
-                                          itemBuilder: (BuildContext context,
-                                              int position) {
-                                            return ListTile(
-                                              title: Text(
-                                                  "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}"),
-                                            );
-                                          }),
-                                    ],
-                                  )
-                          ],
+                          ),
                         ),
                       ),
-                      Divider()
                     ],
                   );
                 });

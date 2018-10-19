@@ -8,7 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 class MasterDrawer extends StatelessWidget {
   final authHandle = AuthHandle();
   final int drawerIndex;
-  ProfileHandle profileHandle = ProfileHandle();
+  final ProfileHandle profileHandle = ProfileHandle();
 
   MasterDrawer(this.drawerIndex);
 

@@ -8,10 +8,9 @@
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-0.4.1" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.2.5" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.5.20" />
-      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/camera-0.2.3" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.4.10" />
-      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-2.0.8" />
       <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_database-1.0.4" />
+      <root url="file://C:/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-2.0.2" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

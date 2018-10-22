@@ -2,16 +2,12 @@ import 'package:atmonitor/ui/acceptedJobsPage.dart';
 import 'package:atmonitor/ui/availableJobsPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
 import 'package:atmonitor/ui/profilePage.dart';
-import 'package:atmonitor/atmnotification.dart';
 import 'package:flutter/material.dart';
-
 
 import 'landingPage.dart';
 import 'theme.dart';
 
 main() {
-  AtmNotification atmNotification = AtmNotification();
-  atmNotification.enableNotification();
   runApp(MaterialApp(
     theme: buildAtmTheme(),
     debugShowCheckedModeBanner: false,

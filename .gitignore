@@ -8,4 +8,6 @@ build/
 
 .flutter-plugins
 
+node_modules
+
 

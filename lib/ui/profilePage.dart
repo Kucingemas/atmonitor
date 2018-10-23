@@ -14,15 +14,15 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final GlobalKey<FormState> formKeyNama = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyName = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyEmail = GlobalKey<FormState>();
-  final GlobalKey<FormState> formKeyHandphone = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyHandPhone = GlobalKey<FormState>();
   ProfileHandle profileHandle = ProfileHandle();
   bool canEdit = false;
-  String nama = "";
+  String name = "";
   String email = "";
   String handPhone = "";
-  String photo ="";
+  String photo = "";
   File pictureChosen;
 
   @override
@@ -85,9 +85,9 @@ class _ProfilePageState extends State<ProfilePage> {
             if (canEdit == false) {
               canEdit = true;
             } else {
-              formKeyNama.currentState.save();
-              formKeyHandphone.currentState.save();
-              profileHandle.updateProfile(nama, handPhone);
+              formKeyName.currentState.save();
+              formKeyHandPhone.currentState.save();
+              profileHandle.updateProfile(name, handPhone);
               canEdit = false;
             }
           });
@@ -149,11 +149,11 @@ class _ProfilePageState extends State<ProfilePage> {
           SharedPreferences sharedPreference = snapshot.data;
           return ListTile(
             title: Form(
-                key: formKeyNama,
+                key: formKeyName,
                 child: TextFormField(
                   enabled: canEdit == false ? false : true,
                   onSaved: (value) {
-                    nama = value;
+                    name = value;
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -202,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
         SharedPreferences sharedPreference = snapshot.data;
         return ListTile(
           title: Form(
-              key: formKeyHandphone,
+              key: formKeyHandPhone,
               child: TextFormField(
                 enabled: canEdit == false ? false : true,
                 onSaved: (value) {

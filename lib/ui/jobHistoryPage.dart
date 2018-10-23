@@ -26,6 +26,9 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
           future: historyHandle.getFixHistory(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return Center(child: CircularProgressIndicator());
+            }
             if (!snapshot.hasData) return Center();
             List<DocumentSnapshot> jobs = snapshot.data.documents;
             return ListView.builder(

@@ -7,7 +7,6 @@ import 'package:uuid/uuid.dart';
 
 class JobsHandle {
   Firestore db = Firestore.instance;
-  StorageReference ref = FirebaseStorage.instance.ref();
 
   //get jobs with status == not accepted, saved as stream
   getAvailableJobs() {
@@ -51,15 +50,17 @@ class JobsHandle {
   finishJob(List<DocumentSnapshot> jobs, int position, File image,
       String solution) async {
     Uuid uuid = Uuid();
+
     //upload image to storage
-    StorageUploadTask uploadTask = ref
+
+    StorageUploadTask storageUploadTask = FirebaseStorage.instance.ref()
         .child("buktiGambarSelesai/" +
             image.lastModifiedSync().toString() +
             "_" +
-            uuid.v1().toString())
-        .putFile(image);
-    //getting download url
-    Uri location = (await uploadTask.future).downloadUrl;
+            uuid.v1().toString()).putFile(image);
+
+    StorageTaskSnapshot storageTaskSnapshot = await storageUploadTask.onComplete;
+    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
     //update image url, solution, status
     db.runTransaction((Transaction transaction) async {
@@ -70,7 +71,7 @@ class JobsHandle {
       await transaction.update(
           documentSnapshot.reference, {"solution": solution.toString()});
       await transaction
-          .update(documentSnapshot.reference, {"image": location.toString()});
+          .update(documentSnapshot.reference, {"image": downloadUrl.toString()});
     });
   }
 }

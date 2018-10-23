@@ -15,15 +15,21 @@ class ProfileHandle {
     return sharedPreferences;
   }
 
+  //update profile picture
   updatePicture(File image) async {
+    //upload image and get the download url
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     StorageUploadTask storageUploadTask = FirebaseStorage.instance
         .ref()
         .child("profilePicture/" + sharedPreferences.getString("userid"))
         .putFile(image);
+    StorageTaskSnapshot storageTaskSnapshot =
+        await storageUploadTask.onComplete;
+    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
-    Uri photo = (await storageUploadTask.future).downloadUrl;
-    sharedPreferences.setString("userphoto", photo.toString());
+    //setting up shared preferences
+    sharedPreferences.setString("userphoto", downloadUrl.toString());
+    print("link sp: ${sharedPreferences.getString("userphoto")}");
     Firestore.instance
         .collection("users")
         .where("uid", isEqualTo: sharedPreferences.getString("userid"))
@@ -40,6 +46,7 @@ class ProfileHandle {
     });
   }
 
+  //update profile information
   updateProfile(String name, String phone) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("username", name);

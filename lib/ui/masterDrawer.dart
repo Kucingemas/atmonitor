@@ -76,6 +76,7 @@ class MasterDrawer extends StatelessWidget {
         if (snapshot.hasData) {
           sharedPreferences = snapshot.data;
           return CircleAvatar(
+            backgroundColor: aOrange500,
             backgroundImage: sharedPreferences.getString("userphoto") == "" ||
                     sharedPreferences.getString("userphoto") == null
                 ? CachedNetworkImageProvider(

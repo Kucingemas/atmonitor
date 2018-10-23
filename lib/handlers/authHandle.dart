@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:atmonitor/atmnotification.dart';
 
 class AuthHandle {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -9,6 +10,7 @@ class AuthHandle {
 
   signIn(String email, String password, BuildContext context,
       GlobalKey<ScaffoldState> key) async {
+    AtmNotification atmNotification = AtmNotification();
     this
         .auth
         .signInWithEmailAndPassword(email: email, password: password)
@@ -31,6 +33,7 @@ class AuthHandle {
         sp.setString("userphone", phone);
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed("/availablejobs");
+        atmNotification.enableNotification();
       });
     }).catchError((e) {
       print("error: $e");

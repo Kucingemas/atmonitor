@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/handlers/profileHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cached_network_image/cached_network_image.dart';

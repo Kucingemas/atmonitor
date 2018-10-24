@@ -1,4 +1,4 @@
-import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class PartsSearchDelegatesPage extends SearchDelegate<String> {

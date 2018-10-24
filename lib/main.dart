@@ -4,8 +4,8 @@ import 'package:atmonitor/ui/loginPage.dart';
 import 'package:atmonitor/ui/profilePage.dart';
 import 'package:flutter/material.dart';
 
-import 'landingPage.dart';
-import 'theme.dart';
+import 'package:atmonitor/utils/landingPage.dart';
+import 'package:atmonitor/utils/theme.dart';
 
 main() {
   runApp(MaterialApp(

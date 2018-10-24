@@ -1,4 +1,4 @@
-import 'package:atmonitor/colors.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

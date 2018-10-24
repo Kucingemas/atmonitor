@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
+import 'package:atmonitor/utils/colors.dart';
 
 ThemeData buildAtmTheme() {
   final ThemeData base = ThemeData.light();

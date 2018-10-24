@@ -1,4 +1,4 @@
-import 'package:atmonitor/atmnotification.dart';
+import 'package:atmonitor/utils/atmnotification.dart';
 import 'package:atmonitor/ui/availableJobsPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';

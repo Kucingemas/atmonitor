@@ -32,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text("Profil Pengguna"),
         centerTitle: true,
       ),
-      drawer: MasterDrawer(2),
+      drawer: MasterDrawer(3),
       body: Center(
         child: ListView(
           children: <Widget>[

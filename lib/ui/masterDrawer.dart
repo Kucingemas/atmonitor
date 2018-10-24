@@ -4,6 +4,7 @@ import 'package:atmonitor/handlers/profileHandle.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MasterDrawer extends StatelessWidget {
   final authHandle = AuthHandle();
@@ -46,13 +47,34 @@ class MasterDrawer extends StatelessWidget {
             ),
             Divider(),
             ListTile(
+              title: Text("Telepon Administrator"),
+              leading: Icon(Icons.phone),
+              onTap: () {
+                Navigator.of(context).pop();
+                callAdmin();
+                //Navigator.of(context).pushReplacementNamed("/profile");
+              },
+              selected: drawerIndex == 2,
+            ),
+            ListTile(
+              title: Text("Chat Administrator"),
+              leading: Icon(Icons.message),
+              onTap: () {
+                Navigator.of(context).pop();
+                chatAdmin("+6281905517770");
+                //Navigator.of(context).pushReplacementNamed("/profile");
+              },
+              selected: drawerIndex == 2,
+            ),
+            Divider(),
+            ListTile(
               title: Text("Profil Pengguna"),
               leading: Icon(Icons.person),
               onTap: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pushReplacementNamed("/profile");
               },
-              selected: drawerIndex == 2,
+              selected: drawerIndex == 3,
             ),
             Divider(),
             ListTile(
@@ -120,4 +142,15 @@ class MasterDrawer extends StatelessWidget {
       },
     );
   }
+
+  callAdmin() async{
+    String phoneNumber = "+6281905517770";
+    await launch("tel://$phoneNumber");
+  }
+
+  chatAdmin(phone) async{
+    String whatsappUrl ="whatsapp://send?phone=$phone";
+    await canLaunch(whatsappUrl)? launch(whatsappUrl):print("fail");
+  }
+
 }

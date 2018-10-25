@@ -1,8 +1,8 @@
+import 'package:atmonitor/utils/atmnotification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:atmonitor/utils/atmnotification.dart';
 
 class AuthHandle {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -11,6 +11,20 @@ class AuthHandle {
   signIn(String email, String password, BuildContext context,
       GlobalKey<ScaffoldState> key) async {
     AtmNotification atmNotification = AtmNotification();
+    key.currentState.showSnackBar(SnackBar(
+      duration: Duration(seconds: 4),
+      content: Row(
+        children: <Widget>[
+          SizedBox(
+            child: CircularProgressIndicator(),
+            width: 15.0,
+            height: 15.0,
+          ),
+          Padding(padding: EdgeInsets.only(left: 20.0)),
+          Text("Mencoba Masuk . . .")
+        ],
+      ),
+    ));
     this
         .auth
         .signInWithEmailAndPassword(email: email, password: password)

@@ -2,10 +2,19 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
+// // Create and Deploy Your First Cloud Functions
+// // https://firebase.google.com/docs/functions/write-firebase-functions
+//
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//  response.send("Hello from Firebase!");
+// });
+
 exports.atmonitor = functions.firestore
        .document('jobs/{id}')
-       .onCreate((snapShot, context) => {
-            const receiver = snapShot.data().assignedTo
+       .onUpdate((snapShot, context) => {
+           if(snapShot.after.data().status == "NOT ACCEPTED"){
+            console.log("masuk if pertama")
+            const receiver = snapShot.after.data().assignedTo
             console.log(receiver);
             const receiverFcm = admin.firestore().collection("users").where("uid","==",receiver).get().then(val => {
                 if(!val.empty){
@@ -20,13 +29,14 @@ exports.atmonitor = functions.firestore
                             sound: "default"
                         }};
                         admin.messaging().sendToDevice(tokenId, notificationContent).then(result => {console.log("sent");});
-                        return null;
+                        return "selsai send nih cihuy";
                 }
                 else{
                     console.log("tidak ada!");
-                    return null;
                 }
             });
+        }
+
             //const receiverFcm = admin.firestore().collection("users").doc(receiver).get();
             // if(receiverFcm.exists) console.log("ada");
             // console.log(receiverFcm);
@@ -44,6 +54,5 @@ exports.atmonitor = functions.firestore
             //     return admin.messaging().sendToDevice(tokenId, notificationContent).then(result => {console.log("sent");
             // });
             // });
-            return null;
 
        });

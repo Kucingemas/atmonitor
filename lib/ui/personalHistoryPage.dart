@@ -1,31 +1,29 @@
 import 'package:atmonitor/handlers/historyHandle.dart';
+import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class JobHistoryPage extends StatefulWidget {
-  final List<DocumentSnapshot> jobs;
-  final int position;
-
-  JobHistoryPage(this.jobs, this.position);
-
+class PersonalHistoryPage extends StatefulWidget {
   @override
-  _JobHistoryPageState createState() => _JobHistoryPageState();
+  _PersonalHistoryPageState createState() => _PersonalHistoryPageState();
 }
 
-class _JobHistoryPageState extends State<JobHistoryPage> {
+class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
+  HistoryHandle historyHandle = HistoryHandle();
+
   @override
   Widget build(BuildContext context) {
-    HistoryHandle historyHandle = HistoryHandle(widget.jobs, widget.position);
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Data Historik"),
-          centerTitle: true,
-        ),
-        body: FutureBuilder(
-          future: historyHandle.getFixHistory(),
+      drawer: MasterDrawer(2),
+      appBar: AppBar(
+        title: Text("Riwayat Pekerjaan"),
+        centerTitle: true,
+      ),
+      body: FutureBuilder(
+          future: historyHandle.getPersonalHistory(),
           builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return Center(child: CircularProgressIndicator());
             }
@@ -38,7 +36,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                       .format(jobs[position].data["time"])
                       .toString();
                   String problem =
-                      jobs[position].data["problemDesc"].toString();
+                  jobs[position].data["problemDesc"].toString();
                   String solution = jobs[position].data["solution"].toString();
                   String aptra = jobs[position].data["aptraTicket"].toString();
                   List parts = jobs[position].data["parts"];
@@ -70,26 +68,26 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                                 Divider(),
                                 parts == null
                                     ? ListTile(
-                                        title: Text(
-                                            "Tidak Ada Suku Cadang Yang Diganti"),
-                                      )
+                                  title: Text(
+                                      "Tidak Ada Suku Cadang Yang Diganti"),
+                                )
                                     : ExpansionTile(
-                                        title: Text("Suku Cadang Yang Diganti"),
-                                        children: <Widget>[
-                                          ListView.builder(
-                                              physics: ClampingScrollPhysics(),
-                                              shrinkWrap: true,
-                                              itemCount: parts.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int position) {
-                                                return ListTile(
-                                                  title: Text(
-                                                      "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}\n"),
-                                                );
-                                              }),
-                                        ],
-                                      )
+                                  title: Text("Suku Cadang Yang Diganti"),
+                                  children: <Widget>[
+                                    ListView.builder(
+                                        physics: ClampingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: parts.length,
+                                        itemBuilder:
+                                            (BuildContext context,
+                                            int position) {
+                                          return ListTile(
+                                            title: Text(
+                                                "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}\n"),
+                                          );
+                                        }),
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -98,7 +96,7 @@ class _JobHistoryPageState extends State<JobHistoryPage> {
                     ],
                   );
                 });
-          },
-        ));
+          }),
+    );
   }
 }

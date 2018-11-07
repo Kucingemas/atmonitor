@@ -1,6 +1,6 @@
-import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/handlers/authHandle.dart';
 import 'package:atmonitor/handlers/profileHandle.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,6 +45,15 @@ class MasterDrawer extends StatelessWidget {
               },
               selected: drawerIndex == 1,
             ),
+            ListTile(
+              title: Text("Riwayat Pekerjaan"),
+              leading: Icon(Icons.history),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed("/personalhistory");
+              },
+              selected: drawerIndex == 2,
+            ),
             Divider(),
             ListTile(
               title: Text("Telepon Administrator"),
@@ -54,7 +63,6 @@ class MasterDrawer extends StatelessWidget {
                 callAdmin();
                 //Navigator.of(context).pushReplacementNamed("/profile");
               },
-              selected: drawerIndex == 2,
             ),
             ListTile(
               title: Text("Chat Administrator"),
@@ -64,7 +72,6 @@ class MasterDrawer extends StatelessWidget {
                 chatAdmin("+6281905517770");
                 //Navigator.of(context).pushReplacementNamed("/profile");
               },
-              selected: drawerIndex == 2,
             ),
             Divider(),
             ListTile(

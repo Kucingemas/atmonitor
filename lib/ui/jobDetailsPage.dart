@@ -1,6 +1,6 @@
-import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +26,8 @@ class JobDetailsPageState extends State<JobDetailsPage> {
         widget.jobs[widget.position].data["problemDesc"].toString();
     String aptra = widget.jobs[widget.position].data["aptraTicket"].toString();
     String serial = widget.jobs[widget.position].data["serialNum"].toString();
+    String vendor =
+        widget.jobs[widget.position].data["vendorMachine"].toString();
     String status = widget.jobs[widget.position].data["status"].toString();
     String time = DateFormat("dd-MM-yyyy hh:mm")
         .format(widget.jobs[widget.position].data["time"])
@@ -33,82 +35,112 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     String wsid = widget.jobs[widget.position].data["wsid"].toString();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Detil Pekerjaan"),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.history,
-              color: aWhite,
+        appBar: AppBar(
+          title: Text("Detil Pekerjaan"),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.history,
+                color: aWhite,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            JobHistoryPage(widget.jobs, widget.position)));
+              },
+            )
+          ],
+        ),
+        body: Card(
+          child: Container(
+            child: ListView(
+              children: <Widget>[
+                ListTile(
+                  title: Text("Aptra ID"),
+                  subtitle: Text("$aptra"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("WSID"),
+                  subtitle: Text("$wsid"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Lokasi"),
+                  subtitle: Text("$location"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Serial Number"),
+                  subtitle: Text("$serial"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Vendor"),
+                  subtitle: Text("$vendor"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Waktu"),
+                  subtitle: Text("$time"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Masalah"),
+                  subtitle: Text("$problem"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Status"),
+                  subtitle: Text("$status"),
+                ),
+              ],
             ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          JobHistoryPage(widget.jobs, widget.position)));
-            },
-          )
-        ],
-      ),
-      body: Card(
-        child: Container(
-          child: ListView(
-            children: <Widget>[
-              ListTile(
-                title: Text("Lokasi"),
-                subtitle: Text("$location"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Detil Masalah"),
-                subtitle: Text("$problem"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Waktu"),
-                subtitle: Text("$time"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("APTRA ID"),
-                subtitle: Text("$aptra"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Serial Number"),
-                subtitle: Text("$serial"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("WSID"),
-                subtitle: Text("$wsid"),
-              ),
-              Divider(),
-              ListTile(
-                title: Text("Status"),
-                subtitle: Text("$status"),
-              ),
-            ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          jobsHandle.acceptJob(widget.jobs, widget.position);
-          Navigator.pop(context);
-          Navigator.of(context).pushReplacementNamed("/acceptedjobs");
-        },
-        label: Text(
-          "Terima",
-          style: TextStyle(color: aBlue800),
-        ),
-        icon: Icon(
-          Icons.assignment_return,
-          color: aBlue800,
-        ),
-      ),
-    );
+        floatingActionButton: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            FloatingActionButton.extended(
+              heroTag: null,
+              onPressed: () {
+                jobsHandle.acceptJob(widget.jobs, widget.position);
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+              },
+              label: Text(
+                "Terima",
+                style: TextStyle(color: aBlue800),
+              ),
+              icon: Icon(
+                Icons.assignment_return,
+                color: aBlue800,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(7.0),
+            ),
+            FloatingActionButton.extended(
+              heroTag: null,
+              onPressed: () {
+                jobsHandle.declineJob(widget.jobs, widget.position);
+                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed("/availablejobs");
+              },
+              label: Text(
+                "Tolak",
+                style: TextStyle(color: aBlue800),
+              ),
+              icon: Icon(
+                Icons.assignment_late,
+                color: aBlue800,
+              ),
+            ),
+          ],
+        ));
   }
 }

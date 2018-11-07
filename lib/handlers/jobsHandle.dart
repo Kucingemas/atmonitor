@@ -26,6 +26,18 @@ class JobsHandle {
     return stream;
   }
 
+  //update status to onProcess (arrived at location)
+  arrivedAtLocation(List<DocumentSnapshot> jobs, int position){
+    db.runTransaction((Transaction transaction) async {
+      DocumentSnapshot documentSnapshot =
+      await transaction.get(jobs[position].reference);
+      await transaction
+          .update(documentSnapshot.reference, {"status": "ON PROCESS"});
+      await transaction.update(documentSnapshot.reference,
+          {"arrivedTime": FieldValue.serverTimestamp()});
+    });
+  }
+
   //update status to accepted
   acceptJob(List<DocumentSnapshot> jobs, int position) {
     db.runTransaction((Transaction transaction) async {
@@ -33,16 +45,34 @@ class JobsHandle {
           await transaction.get(jobs[position].reference);
       await transaction
           .update(documentSnapshot.reference, {"status": "ACCEPTED"});
+      await transaction.update(documentSnapshot.reference,
+          {"acceptTime": FieldValue.serverTimestamp()});
+    });
+  }
+
+  //update status to declined
+  //TODO: decline - what to do in db?
+  declineJob(List<DocumentSnapshot> jobs, int position) {
+    db.runTransaction((Transaction transaction) async {
+      DocumentSnapshot documentSnapshot =
+          await transaction.get(jobs[position].reference);
+      await transaction
+          .update(documentSnapshot.reference, {"status": "DECLINED"});
+      await transaction.update(documentSnapshot.reference,
+          {"declineTime": FieldValue.serverTimestamp()});
     });
   }
 
   //update status to need help
+  //TODO: need help - what to do in db?
   helpJob(List<DocumentSnapshot> jobs, int position) {
     db.runTransaction((Transaction transaction) async {
       DocumentSnapshot documentSnapshot =
           await transaction.get(jobs[position].reference);
       await transaction
           .update(documentSnapshot.reference, {"status": "NEED HELP"});
+      await transaction.update(documentSnapshot.reference,
+          {"needHelpTime": FieldValue.serverTimestamp()});
     });
   }
 
@@ -52,14 +82,16 @@ class JobsHandle {
     Uuid uuid = Uuid();
 
     //upload image to storage
-
-    StorageUploadTask storageUploadTask = FirebaseStorage.instance.ref()
+    StorageUploadTask storageUploadTask = FirebaseStorage.instance
+        .ref()
         .child("buktiGambarSelesai/" +
             image.lastModifiedSync().toString() +
             "_" +
-            uuid.v1().toString()).putFile(image);
+            uuid.v1().toString())
+        .putFile(image);
 
-    StorageTaskSnapshot storageTaskSnapshot = await storageUploadTask.onComplete;
+    StorageTaskSnapshot storageTaskSnapshot =
+        await storageUploadTask.onComplete;
     String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
     //update image url, solution, status
@@ -68,10 +100,12 @@ class JobsHandle {
           await transaction.get(jobs[position].reference);
       await transaction
           .update(documentSnapshot.reference, {"status": "FINISHED"});
+      await transaction.update(documentSnapshot.reference,
+          {"finishTime": FieldValue.serverTimestamp()});
       await transaction.update(
           documentSnapshot.reference, {"solution": solution.toString()});
-      await transaction
-          .update(documentSnapshot.reference, {"image": downloadUrl.toString()});
+      await transaction.update(
+          documentSnapshot.reference, {"image": downloadUrl.toString()});
     });
   }
 }

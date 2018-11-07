@@ -4,6 +4,7 @@ description: A new Flutter application.
 dependencies:
   flutter:
     sdk: flutter
+  geolocator:
   url_launcher:
   cached_network_image:
   uuid:

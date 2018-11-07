@@ -1,7 +1,7 @@
-import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/ui/jobDoneConfirmationPage.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:atmonitor/ui/needHelpPage.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +25,8 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
     String problem =
         widget.jobs[widget.position].data["problemDesc"].toString();
     String aptra = widget.jobs[widget.position].data["aptraTicket"].toString();
+    String vendor =
+        widget.jobs[widget.position].data["vendorMachine"].toString();
     String serial = widget.jobs[widget.position].data["serialNum"].toString();
     String status = widget.jobs[widget.position].data["status"].toString();
     String time = DateFormat("dd-MM-yyyy hh:mm")
@@ -57,23 +59,18 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             child: ListView(
               children: <Widget>[
                 ListTile(
+                  title: Text("Aptra ID"),
+                  subtitle: Text("$aptra"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("WSID"),
+                  subtitle: Text("$wsid"),
+                ),
+                Divider(),
+                ListTile(
                   title: Text("Lokasi"),
                   subtitle: Text("$location"),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text("Detil Masalah"),
-                  subtitle: Text("$problem"),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text("Waktu"),
-                  subtitle: Text("$time"),
-                ),
-                Divider(),
-                ListTile(
-                  title: Text("APTRA ID"),
-                  subtitle: Text("$aptra"),
                 ),
                 Divider(),
                 ListTile(
@@ -82,8 +79,18 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
                 ),
                 Divider(),
                 ListTile(
-                  title: Text("WSID"),
-                  subtitle: Text("$wsid"),
+                  title: Text("Vendor"),
+                  subtitle: Text("$vendor"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Waktu"),
+                  subtitle: Text("$time"),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Masalah"),
+                  subtitle: Text("$problem"),
                 ),
                 Divider(),
                 ListTile(

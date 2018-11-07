@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/partSearchDelegatesPage.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,9 +19,11 @@ class JobDoneConfirmationPage extends StatefulWidget {
 }
 
 class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeySolusi = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final jobsHandle = JobsHandle();
+  bool isPictureValidated = false;
+  String pictureEmpty = "tidak ada gambar";
   File pictureTaken;
   List<String> changedPartsSelected = List<String>();
   String solution = "";
@@ -41,20 +43,20 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           ),
           ListTile(
             title: Form(
-              key: formKey,
+              key: formKeySolusi,
               child: TextFormField(
                 onSaved: (value) {
                   solution = value;
                 },
+                validator: (value) => value.isEmpty || value == ""
+                    ? "Isi solusi yang dikerjakan"
+                    : null,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                     labelText: "Solusi Yang Dikerjakan:",
                     border: OutlineInputBorder()),
                 initialValue: "",
-                validator: (value) => value.isEmpty || value == ""
-                    ? "Isi solusi yang dikerjakan"
-                    : null,
               ),
             ),
           ),
@@ -130,14 +132,15 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
             ),
             subtitle: Text("pratinjau: "),
           ),
-          SizedBox(
-            height: 10.0,
+          Padding(
+            padding: EdgeInsets.all(10.0),
           ),
           pictureTaken == null
-              ? Text(
-                  "tidak ada gambar",
+              ? Text(pictureEmpty,
                   textAlign: TextAlign.center,
-                )
+                  style: isPictureValidated
+                      ? TextStyle(color: kShrineErrorRed)
+                      : TextStyle(color: aBlue800))
               : Image.file(
                   pictureTaken,
                   height: 300.0,
@@ -156,13 +159,19 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           ),
           label: Text("Konfirmasi", style: TextStyle(color: aBlue800)),
           onPressed: () {
-            if (formKey.currentState.validate()) {
-              formKey.currentState.save();
+            if (formKeySolusi.currentState.validate() && pictureTaken != null) {
+              formKeySolusi.currentState.save();
               jobsHandle.finishJob(
                   widget.jobs, widget.position, pictureTaken, solution);
-              formKey.currentState.reset();
+              formKeySolusi.currentState.reset();
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+            }
+            if (pictureTaken == null) {
+              setState(() {
+                isPictureValidated = true;
+                pictureEmpty = "ambil gambar bukti terlebih dahulu";
+              });
             }
           }),
     );

@@ -1,5 +1,6 @@
 import 'package:atmonitor/ui/acceptedJobsPage.dart';
 import 'package:atmonitor/ui/availableJobsPage.dart';
+import 'package:atmonitor/ui/personalHistoryPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
 import 'package:atmonitor/ui/profilePage.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ main() {
       "/login": (BuildContext context) => LoginPage(),
       "/acceptedjobs": (BuildContext context) => AcceptedJobsPage(),
       "/profile": (BuildContext context) => ProfilePage(),
+      "/personalhistory" : (BuildContext context) => PersonalHistoryPage(),
     },
   ));
 }

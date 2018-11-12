@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:atmonitor/ui/onGoingJobDetailsPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AcceptedJobsPage extends StatefulWidget {
   @override
@@ -11,6 +14,14 @@ class AcceptedJobsPage extends StatefulWidget {
 
 class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
   JobsHandle jobsHandle = JobsHandle();
+  String id = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUid();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +32,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
       ),
       drawer: MasterDrawer(1),
       body: StreamBuilder(
-          stream: jobsHandle.getAcceptedJobs(),
+          stream: jobsHandle.getAcceptedJobs(id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) return Center();
@@ -39,15 +50,9 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                         subtitle: Text("$problem"),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OnGoingJobDetailsPage(
-                                        jobs,
-                                        position,
-                                      )));
+                          pressDetailShow(jobs, position);
                         },
-                        onLongPress: () {},
+                        onLongPress: longPressDetailShow(),
                       ),
                     ),
                   );
@@ -56,9 +61,25 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
     );
   }
 
-  //on press, show...
-  pressDetailShow() {}
+  //on press, go to detail page
+  pressDetailShow(List<DocumentSnapshot> jobs, int position) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => OnGoingJobDetailsPage(
+                  jobs,
+                  position,
+                )));
+  }
 
-  //on long press show...
+  //on long press show... nothing for the time being...
   longPressDetailShow() {}
+
+  //get user id
+  Future<Null> getUid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString("userid");
+    });
+  }
 }

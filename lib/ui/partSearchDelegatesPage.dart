@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PartsSearchDelegatesPage extends SearchDelegate<String> {
   List<String> resultList = List<String>();
 
-  final List<String> partList = [
+  List<String> partList = [
     "ajoom",
     "asd",
     "adda",
@@ -169,7 +169,8 @@ class ResultList extends StatelessWidget {
           ),
           title: Text(results[position].toString()),
           onTap: () {
-            onSelected(results[position]);
+            String result= results[position];
+            onSelected(result);
           },
         );
       },

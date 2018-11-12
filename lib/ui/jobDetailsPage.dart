@@ -24,13 +24,14 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     String location = widget.jobs[widget.position].data["location"].toString();
     String problem =
         widget.jobs[widget.position].data["problemDesc"].toString();
-    String aptra = widget.jobs[widget.position].data["aptraTicket"].toString();
+    String aptra = widget.jobs[widget.position].data["ticketNum"].toString();
     String serial = widget.jobs[widget.position].data["serialNum"].toString();
-    String vendor =
-        widget.jobs[widget.position].data["vendorMachine"].toString();
+    String vendorId = widget.jobs[widget.position].data["vendorId"].toString();
+    String vendorName =
+        widget.jobs[widget.position].data["vendorName"].toString();
     String status = widget.jobs[widget.position].data["status"].toString();
     String time = DateFormat("dd-MM-yyyy hh:mm")
-        .format(widget.jobs[widget.position].data["time"])
+        .format(widget.jobs[widget.position].data["startDatetime"])
         .toString();
     String wsid = widget.jobs[widget.position].data["wsid"].toString();
 
@@ -80,16 +81,16 @@ class JobDetailsPageState extends State<JobDetailsPage> {
                 Divider(),
                 ListTile(
                   title: Text("Vendor"),
-                  subtitle: Text("$vendor"),
+                  subtitle: Text("$vendorId - $vendorName"),
                 ),
                 Divider(),
                 ListTile(
-                  title: Text("Waktu"),
+                  title: Text("Waktu Mulai"),
                   subtitle: Text("$time"),
                 ),
                 Divider(),
                 ListTile(
-                  title: Text("Masalah"),
+                  title: Text("Deskripsi Masalah"),
                   subtitle: Text("$problem"),
                 ),
                 Divider(),

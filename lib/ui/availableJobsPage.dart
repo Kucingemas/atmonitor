@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobDetailsPage.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AvailableJobsPage extends StatefulWidget {
   @override
@@ -11,6 +14,14 @@ class AvailableJobsPage extends StatefulWidget {
 
 class _AvailableJobsPage extends State<AvailableJobsPage> {
   JobsHandle jobsHandle = JobsHandle();
+  String id = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUid();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +32,7 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
       ),
       drawer: MasterDrawer(0),
       body: StreamBuilder(
-          stream: jobsHandle.getAvailableJobs(),
+          stream: jobsHandle.getAvailableJobs(id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) return Center();
@@ -39,13 +50,7 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
                         subtitle: Text("$problem"),
                         trailing: Icon(Icons.chevron_right),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => JobDetailsPage(
-                                        jobs,
-                                        position,
-                                      )));
+                          pressDetailShow(jobs, position);
                         },
                         onLongPress: () {
                           longPressDetailShow(
@@ -57,6 +62,17 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
                 });
           }),
     );
+  }
+
+  //on press, go to detail page
+  pressDetailShow(List<DocumentSnapshot> jobs, int position) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => JobDetailsPage(
+                  jobs,
+                  position,
+                )));
   }
 
   //on long press, then show details
@@ -88,5 +104,13 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
       ],
     );
     showDialog(context: context, builder: (context) => alert);
+  }
+
+  //get user id
+  Future<Null> getUid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString("userid");
+    });
   }
 }

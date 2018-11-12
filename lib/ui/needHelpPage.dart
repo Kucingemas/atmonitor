@@ -19,11 +19,13 @@ class NeedHelpPage extends StatefulWidget {
 class _NeedHelpPageState extends State<NeedHelpPage> {
   final GlobalKey<FormState> formKeySolusi = GlobalKey<FormState>();
   final GlobalKey<FormState> formKeyMasalah = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKeyKodeProblem = GlobalKey<FormState>();
   final JobsHandle jobsHandle = JobsHandle();
   bool isPictureValidated = false;
   File pictureTaken;
-  String solution = "";
+  String triedSolution = "";
   String problem = "";
+  String problemCode = "";
   String kodeProblem = "";
   String placeHolderKodeProblem = "Pilih Kode Problem";
   String pictureEmpty = "tidak ada gambar";
@@ -45,7 +47,7 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
                 key: formKeySolusi,
                 child: TextFormField(
                   onSaved: (value) {
-                    solution = value;
+                    triedSolution = value;
                   },
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
@@ -87,27 +89,30 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
             padding: EdgeInsets.all(10.0),
           ),
           Divider(),
-          //test
-          ListTile(
-            title: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                hint: Text(placeHolderKodeProblem),
-                items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                  return new DropdownMenuItem<String>(
-                    value: value,
-                    child: new Text(value),
-                  );
-                }).toList(),
-                onChanged: (selectedVal) {
-                  setState(() {
-                    placeHolderKodeProblem = selectedVal;
-                    kodeProblem = selectedVal;
-                  });
-                },
-              ),
-            ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
           ),
-          //end test
+          ListTile(
+            title: Form(
+                key: formKeyKodeProblem,
+                child: TextFormField(
+                  onSaved: (value) {
+                    problemCode = value;
+                  },
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                      labelText: "Kode Problem Yang Muncul",
+                      border: OutlineInputBorder()),
+                  initialValue: "",
+                  validator: (value) => value.isEmpty || value == ""
+                      ? "Isi kode problem yang muncul"
+                      : null,
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+          ),
           Divider(),
           ListTile(
             title: Text("Unggah Bukti Gambar"),
@@ -151,8 +156,12 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
         onPressed: () {
           if (formKeySolusi.currentState.validate() &&
               formKeyMasalah.currentState.validate() &&
+              formKeyKodeProblem.currentState.validate() &&
               pictureTaken != null) {
-            jobsHandle.helpJob(widget.jobs, widget.position);
+            formKeyKodeProblem.currentState.save();
+            formKeyMasalah.currentState.save();
+            formKeySolusi.currentState.save();
+            jobsHandle.helpJob(widget.jobs, widget.position, triedSolution, pictureTaken, problem, problemCode);
             Navigator.of(context).pop();
             Navigator.of(context).pushReplacementNamed("/acceptedjobs");
           }

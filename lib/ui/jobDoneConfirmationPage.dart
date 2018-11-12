@@ -27,6 +27,7 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
   File pictureTaken;
   List<String> changedPartsSelected = List<String>();
   String solution = "";
+  List<List<Map<dynamic,dynamic>>> parts =List<List<Map<dynamic,dynamic>>>();
 
   @override
   Widget build(BuildContext context) {

@@ -65,16 +65,17 @@ class JobsHandle {
 
   //update status to need help
   //TODO: triedImage, kode problem, masalah yang dihadapi
-  helpJob(List<DocumentSnapshot> jobs, int position, String triedSolution, File image, String problem, String problemCode) async {
+  helpJob(List<DocumentSnapshot> jobs, int position, String triedSolution,
+      File image, String problem, String problemCode) async {
     Uuid uuid = Uuid();
 
     //upload image to storage
     StorageUploadTask storageUploadTask = FirebaseStorage.instance
         .ref()
         .child("buktiGambarNeedHelp/" +
-        image.lastModifiedSync().toString() +
-        "_" +
-        uuid.v1().toString())
+            image.lastModifiedSync().toString() +
+            "_" +
+            uuid.v1().toString())
         .putFile(image);
 
     StorageTaskSnapshot storageTaskSnapshot =
@@ -90,8 +91,8 @@ class JobsHandle {
           {"needHelpTime": FieldValue.serverTimestamp()});
       await transaction
           .update(documentSnapshot.reference, {"triedSolution": triedSolution});
-      await transaction
-          .update(documentSnapshot.reference, {"triedImage": downloadUrl.toString()});
+      await transaction.update(
+          documentSnapshot.reference, {"triedImage": downloadUrl.toString()});
       await transaction
           .update(documentSnapshot.reference, {"needHelpReason": problem});
       await transaction

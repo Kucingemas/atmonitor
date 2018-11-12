@@ -169,7 +169,7 @@ class ResultList extends StatelessWidget {
           ),
           title: Text(results[position].toString()),
           onTap: () {
-            String result= results[position];
+            String result = results[position];
             onSelected(result);
           },
         );

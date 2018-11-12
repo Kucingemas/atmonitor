@@ -36,7 +36,7 @@ class LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(
-                        //icon: Icon(Icons.face),
+                      //icon: Icon(Icons.face),
                         labelText: "Nama Pengguna: ",
                         border: OutlineInputBorder()),
                     controller: _namaPenggunaController,
@@ -46,7 +46,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   TextField(
                     decoration: InputDecoration(
-                        //icon: Icon(Icons.lock),
+                      //icon: Icon(Icons.lock),
                         labelText: "Kata Sandi: ",
                         border: OutlineInputBorder()),
                     controller: _kataSandiController,

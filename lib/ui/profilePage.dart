@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:atmonitor/utils/colors.dart';
 import 'package:atmonitor/handlers/profileHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

@@ -161,7 +161,8 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
             formKeyKodeProblem.currentState.save();
             formKeyMasalah.currentState.save();
             formKeySolusi.currentState.save();
-            jobsHandle.helpJob(widget.jobs, widget.position, triedSolution, pictureTaken, problem, problemCode);
+            jobsHandle.helpJob(widget.jobs, widget.position, triedSolution,
+                pictureTaken, problem, problemCode);
             Navigator.of(context).pop();
             Navigator.of(context).pushReplacementNamed("/acceptedjobs");
           }

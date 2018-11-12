@@ -42,7 +42,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                 itemBuilder: (BuildContext context, int position) {
                   String location = jobs[position].data["location"].toString();
                   String problem =
-                      jobs[position].data["problemDesc"].toString();
+                  jobs[position].data["problemDesc"].toString();
                   return Card(
                     child: Container(
                       child: ListTile(
@@ -66,7 +66,8 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => OnGoingJobDetailsPage(
+            builder: (context) =>
+                OnGoingJobDetailsPage(
                   jobs,
                   position,
                 )));

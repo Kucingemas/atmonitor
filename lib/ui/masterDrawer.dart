@@ -150,14 +150,13 @@ class MasterDrawer extends StatelessWidget {
     );
   }
 
-  callAdmin() async{
+  callAdmin() async {
     String phoneNumber = "+6281905517770";
     await launch("tel://$phoneNumber");
   }
 
-  chatAdmin(phone) async{
-    String whatsappUrl ="whatsapp://send?phone=$phone";
-    await canLaunch(whatsappUrl)? launch(whatsappUrl):print("fail");
+  chatAdmin(phone) async {
+    String whatsappUrl = "whatsapp://send?phone=$phone";
+    await canLaunch(whatsappUrl) ? launch(whatsappUrl) : print("fail");
   }
-
 }

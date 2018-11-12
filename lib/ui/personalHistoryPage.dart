@@ -22,8 +22,7 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
       ),
       body: FutureBuilder(
           future: historyHandle.getPersonalHistory(),
-          builder:
-              (BuildContext context, AsyncSnapshot snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return Center(child: CircularProgressIndicator());
             }
@@ -36,7 +35,7 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                       .format(jobs[position].data["time"])
                       .toString();
                   String problem =
-                  jobs[position].data["problemDesc"].toString();
+                      jobs[position].data["problemDesc"].toString();
                   String solution = jobs[position].data["solution"].toString();
                   String aptra = jobs[position].data["aptraTicket"].toString();
                   List parts = jobs[position].data["parts"];
@@ -68,26 +67,26 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                                 Divider(),
                                 parts == null
                                     ? ListTile(
-                                  title: Text(
-                                      "Tidak Ada Suku Cadang Yang Diganti"),
-                                )
+                                        title: Text(
+                                            "Tidak Ada Suku Cadang Yang Diganti"),
+                                      )
                                     : ExpansionTile(
-                                  title: Text("Suku Cadang Yang Diganti"),
-                                  children: <Widget>[
-                                    ListView.builder(
-                                        physics: ClampingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: parts.length,
-                                        itemBuilder:
-                                            (BuildContext context,
-                                            int position) {
-                                          return ListTile(
-                                            title: Text(
-                                                "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}\n"),
-                                          );
-                                        }),
-                                  ],
-                                )
+                                        title: Text("Suku Cadang Yang Diganti"),
+                                        children: <Widget>[
+                                          ListView.builder(
+                                              physics: ClampingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: parts.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int position) {
+                                                return ListTile(
+                                                  title: Text(
+                                                      "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}\n"),
+                                                );
+                                              }),
+                                        ],
+                                      )
                               ],
                             ),
                           ),

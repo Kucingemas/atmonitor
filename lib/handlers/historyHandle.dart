@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryHandle {
   final List<DocumentSnapshot> jobs;
@@ -27,7 +26,6 @@ class HistoryHandle {
 
   //get personal history
   getPersonalHistory(String id) async {
-
     Future<QuerySnapshot> getJobs = Firestore.instance
         .collection("jobs")
         .where("status", isEqualTo: "FINISHED")
@@ -46,9 +44,9 @@ class HistoryHandle {
         .collection("jobs")
         .where("vStatus", isEqualTo: "vFINISHED")
         .where("vAssignedTo", isEqualTo: id)
-    //.where("status", isEqualTo: "NEED HELP")
+        //.where("status", isEqualTo: "NEED HELP")
         .where("vFinishedTime",
-        isGreaterThanOrEqualTo: DateTime.now().add(Duration(days: -7)))
+            isGreaterThanOrEqualTo: DateTime.now().add(Duration(days: -7)))
         .getDocuments()
         .catchError((error) => print("$error"));
 

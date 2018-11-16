@@ -8,7 +8,7 @@ class HistoryHandle {
 
   HistoryHandle([this.jobs, this.position]);
 
-  //TODO: status or vStatus?
+  //TODO: status or vStatus? STATUS
   getMachineHistory() {
     print("ini loh yang masuk: ${jobs[position].data["location"].toString()}");
     Future<QuerySnapshot> getJobs = Firestore.instance

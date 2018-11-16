@@ -15,6 +15,7 @@ class AcceptedJobsPage extends StatefulWidget {
 class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
   JobsHandle jobsHandle = JobsHandle();
   String id = "";
+  String role = "";
 
   @override
   void initState() {
@@ -32,7 +33,9 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
       ),
       drawer: MasterDrawer(1),
       body: StreamBuilder(
-          stream: jobsHandle.getAcceptedJobs(id),
+          stream: role == "Teknisi PKT"
+              ? jobsHandle.getAcceptedJobs(id)
+              : jobsHandle.getAcceptedJobsVendor(id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) return Center();
@@ -40,9 +43,12 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
+//                  if (snapshot.connectionState != ConnectionState.done) {
+//                    return Center(child: CircularProgressIndicator());
+//                  }
                   String location = jobs[position].data["location"].toString();
                   String problem =
-                  jobs[position].data["problemDesc"].toString();
+                      jobs[position].data["problemDesc"].toString();
                   return Card(
                     child: Container(
                       child: ListTile(
@@ -66,8 +72,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                OnGoingJobDetailsPage(
+            builder: (context) => OnGoingJobDetailsPage(
                   jobs,
                   position,
                 )));
@@ -81,6 +86,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       id = prefs.getString("userid");
+      role = prefs.getString("role");
     });
   }
 }

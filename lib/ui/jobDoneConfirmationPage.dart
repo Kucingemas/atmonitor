@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:atmonitor/handlers/jobsHandle.dart';
@@ -6,6 +7,7 @@ import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobDoneConfirmationPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
@@ -19,6 +21,9 @@ class JobDoneConfirmationPage extends StatefulWidget {
 }
 
 class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
+  String id = "";
+  String role = "";
+
   final GlobalKey<FormState> formKeySolusi = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final jobsHandle = JobsHandle();
@@ -27,7 +32,14 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
   File pictureTaken;
   List<String> changedPartsSelected = List<String>();
   String solution = "";
-  List<List<Map<dynamic,dynamic>>> parts =List<List<Map<dynamic,dynamic>>>();
+  List<List<Map<dynamic, dynamic>>> parts = List<List<Map<dynamic, dynamic>>>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSp();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +174,11 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           onPressed: () {
             if (formKeySolusi.currentState.validate() && pictureTaken != null) {
               formKeySolusi.currentState.save();
-              jobsHandle.finishJob(
-                  widget.jobs, widget.position, pictureTaken, solution);
+              role == "Teknisi PKT"
+                  ? jobsHandle.finishJob(
+                      widget.jobs, widget.position, pictureTaken, solution, changedPartsSelected)
+                  : jobsHandle.finishJobVendor(
+                      widget.jobs, widget.position, pictureTaken, solution, changedPartsSelected);
               formKeySolusi.currentState.reset();
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed("/acceptedjobs");
@@ -186,6 +201,14 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
       setState(() {
         pictureTaken = image;
       });
+    });
+  }
+
+  Future getSp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString("userid");
+      role = prefs.getString("role");
     });
   }
 }

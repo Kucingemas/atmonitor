@@ -38,13 +38,16 @@ class AuthHandle {
         String email = snapshot.documents.first.data["email"];
         String phone = snapshot.documents.first.data["phone"];
         String photo = snapshot.documents.first.data["photo"];
+        String role = snapshot.documents.first.data["role"];
 
         sp = await SharedPreferences.getInstance();
+        sp.setString("role", role);
         sp.setString("userid", user.uid);
         sp.setString("useremail", email);
         sp.setString("username", name);
         sp.setString("userphoto", photo);
         sp.setString("userphone", phone);
+
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed("/availablejobs");
         atmNotification.enableNotification();

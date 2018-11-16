@@ -15,6 +15,7 @@ class AvailableJobsPage extends StatefulWidget {
 class _AvailableJobsPage extends State<AvailableJobsPage> {
   JobsHandle jobsHandle = JobsHandle();
   String id = "";
+  String role = "";
 
   @override
   void initState() {
@@ -32,7 +33,9 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
       ),
       drawer: MasterDrawer(0),
       body: StreamBuilder(
-          stream: jobsHandle.getAvailableJobs(id),
+          stream: role == "Teknisi PKT"
+              ? jobsHandle.getAvailableJobs(id)
+              : jobsHandle.getAvailableJobsVendor(id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) return Center();
@@ -40,6 +43,9 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
+//                  if (snapshot.connectionState != ConnectionState.done) {
+//                    return Center(child: CircularProgressIndicator());
+//                  }
                   String location = jobs[position].data["location"].toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();
@@ -107,10 +113,11 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
   }
 
   //get user id
-  Future<Null> getUid() async {
+  Future getUid() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       id = prefs.getString("userid");
+      role = prefs.get("role");
     });
   }
 }

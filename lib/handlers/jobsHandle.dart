@@ -18,6 +18,15 @@ class JobsHandle {
     return stream;
   }
 
+  getAvailableJobsVendor(String id) {
+    Stream<QuerySnapshot> streamVendor = db
+        .collection("jobs")
+        .where("vStatus", isEqualTo: "vNOT ACCEPTED")
+        .where("vAssignedTo", isEqualTo: id)
+        .snapshots();
+    return streamVendor;
+  }
+
   //get jobs with status == accepted, saved as stream
   getAcceptedJobs(String id) {
     Stream<QuerySnapshot> stream = db
@@ -28,32 +37,52 @@ class JobsHandle {
     return stream;
   }
 
-  //update status to onProcess (arrived at location)
-  arrivedAtLocation(List<DocumentSnapshot> jobs, int position) {
-    db.runTransaction((Transaction transaction) async {
-      DocumentSnapshot documentSnapshot =
-          await transaction.get(jobs[position].reference);
-      await transaction
-          .update(documentSnapshot.reference, {"status": "ON PROCESS"});
-      await transaction.update(documentSnapshot.reference,
-          {"arrivedTime": FieldValue.serverTimestamp()});
-    });
+  getAcceptedJobsVendor(String id) {
+    Stream<QuerySnapshot> stream = db
+        .collection("jobs")
+        .where("vStatus", isEqualTo: "vACCEPTED")
+        .where("vAssignedTo", isEqualTo: id)
+        .snapshots();
+    return stream;
   }
 
   //update status to accepted
-  acceptJob(List<DocumentSnapshot> jobs, int position) {
+  acceptJob(
+    List<DocumentSnapshot> jobs,
+    int position,
+  ) {
+    db.runTransaction((Transaction transaction) async {
+      DocumentSnapshot documentSnapshot =
+          await transaction.get(jobs[position].reference);
+      //if pkt technician is not a helper
+      if (jobs[position].data["needHelpTime"] == null) {
+        await transaction
+            .update(documentSnapshot.reference, {"status": "ACCEPTED"});
+        await transaction.update(documentSnapshot.reference,
+            {"acceptedTime": FieldValue.serverTimestamp()});
+      }
+      //if a helper
+      else {
+        await transaction
+            .update(documentSnapshot.reference, {"status": "ACCEPTED"});
+        await transaction.update(documentSnapshot.reference,
+            {"hAcceptedTime": FieldValue.serverTimestamp()});
+      }
+    });
+  }
+
+  acceptJobVendor(List<DocumentSnapshot> jobs, int position) {
     db.runTransaction((Transaction transaction) async {
       DocumentSnapshot documentSnapshot =
           await transaction.get(jobs[position].reference);
       await transaction
-          .update(documentSnapshot.reference, {"status": "ACCEPTED"});
+          .update(documentSnapshot.reference, {"vStatus": "vACCEPTED"});
       await transaction.update(documentSnapshot.reference,
-          {"acceptedTime": FieldValue.serverTimestamp()});
+          {"vAcceptedTime": FieldValue.serverTimestamp()});
     });
   }
 
   //update status to declined
-  //TODO: decline - what to do in db?
   declineJob(List<DocumentSnapshot> jobs, int position) {
     db.runTransaction((Transaction transaction) async {
       DocumentSnapshot documentSnapshot =
@@ -63,8 +92,16 @@ class JobsHandle {
     });
   }
 
+  declineJobVendor(List<DocumentSnapshot> jobs, int position) {
+    db.runTransaction((Transaction transaction) async {
+      DocumentSnapshot documentSnapshot =
+          await transaction.get(jobs[position].reference);
+      await transaction
+          .update(documentSnapshot.reference, {"vStatus": "vDECLINED"});
+    });
+  }
+
   //update status to need help
-  //TODO: triedImage, kode problem, masalah yang dihadapi
   helpJob(List<DocumentSnapshot> jobs, int position, String triedSolution,
       File image, String problem, String problemCode) async {
     Uuid uuid = Uuid();
@@ -101,9 +138,9 @@ class JobsHandle {
   }
 
   //update status to finish
-  //TODO: parts upload
+  //TODO: parts upload for pkt?
   finishJob(List<DocumentSnapshot> jobs, int position, File image,
-      String solution) async {
+      String solution, List<String> parts) async {
     Uuid uuid = Uuid();
 
     //upload image to storage
@@ -119,8 +156,7 @@ class JobsHandle {
         await storageUploadTask.onComplete;
     String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
-    //update image url, solution, status
-    //TODO parts upload
+    //update image url, solution, status, parts
     db.runTransaction((Transaction transaction) async {
       DocumentSnapshot documentSnapshot =
           await transaction.get(jobs[position].reference);
@@ -132,6 +168,40 @@ class JobsHandle {
           documentSnapshot.reference, {"solution": solution.toString()});
       await transaction.update(
           documentSnapshot.reference, {"image": downloadUrl.toString()});
+    });
+  }
+
+  finishJobVendor(List<DocumentSnapshot> jobs, int position, File image,
+      String solution, List<String> parts) async {
+    Uuid uuid = Uuid();
+
+    //upload image to storage
+    StorageUploadTask storageUploadTask = FirebaseStorage.instance
+        .ref()
+        .child("buktiGambarSelesai/" +
+            image.lastModifiedSync().toString() +
+            "_" +
+            uuid.v1().toString())
+        .putFile(image);
+
+    StorageTaskSnapshot storageTaskSnapshot =
+        await storageUploadTask.onComplete;
+    String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+
+    //update image url, solution, status, parts
+    db.runTransaction((Transaction transaction) async {
+      DocumentSnapshot documentSnapshot =
+          await transaction.get(jobs[position].reference);
+      await transaction
+          .update(documentSnapshot.reference, {"vStatus": "vFINISHED"});
+      await transaction.update(documentSnapshot.reference,
+          {"vFinishedTime": FieldValue.serverTimestamp()});
+      await transaction.update(
+          documentSnapshot.reference, {"vSolution": solution.toString()});
+      await transaction.update(
+          documentSnapshot.reference, {"vImage": downloadUrl.toString()});
+      await transaction
+          .update(documentSnapshot.reference, {"partsName": parts});
     });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:atmonitor/ui/jobDoneConfirmationPage.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:atmonitor/ui/needHelpPage.dart';
@@ -5,8 +7,8 @@ import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-//TODO: jika pkthelper!=null maka fab disabled
 class OnGoingJobDetailsPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
   final int position;
@@ -20,9 +22,23 @@ class OnGoingJobDetailsPage extends StatefulWidget {
 }
 
 class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
+  String id = "";
+  String role = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getSp();
+  }
+
   @override
   Widget build(BuildContext context) {
-    //TODO: get pkthelper...
+//    String hAssignedTo =
+//        widget.jobs[widget.position].data["hAssignedTo"].toString();
+    DateTime needHelpTime =
+        widget.jobs[widget.position].data["needHelpTime"];
+    print("ini need help time: $needHelpTime");
     String location = widget.jobs[widget.position].data["location"].toString();
     String problem =
         widget.jobs[widget.position].data["problemDesc"].toString();
@@ -129,25 +145,35 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             Padding(
               padding: EdgeInsets.all(7.0),
             ),
-            FloatingActionButton.extended(
-              heroTag: null,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            NeedHelpPage(widget.position, widget.jobs)));
-              },
-              icon: Icon(
-                Icons.person,
-                color: aBlue800,
-              ),
-              label: Text(
-                "Bantuan",
-                style: TextStyle(color: aBlue800),
-              ),
-            ),
+            role == "Teknisi PKT" && needHelpTime == null
+                ? FloatingActionButton.extended(
+                    heroTag: null,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  NeedHelpPage(widget.position, widget.jobs)));
+                    },
+                    icon: Icon(
+                      Icons.person,
+                      color: aBlue800,
+                    ),
+                    label: Text(
+                      "Bantuan",
+                      style: TextStyle(color: aBlue800),
+                    ),
+                  )
+                : Column(),
           ],
         ));
+  }
+
+  Future getSp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString("userid");
+      role = prefs.getString("role");
+    });
   }
 }

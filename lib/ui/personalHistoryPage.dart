@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:atmonitor/handlers/historyHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalHistoryPage extends StatefulWidget {
   @override
@@ -11,6 +14,15 @@ class PersonalHistoryPage extends StatefulWidget {
 
 class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
   HistoryHandle historyHandle = HistoryHandle();
+  String id = "";
+  String role = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUid();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +33,9 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-          future: historyHandle.getPersonalHistory(),
+          future: role == "Teknisi PKT"
+              ? historyHandle.getPersonalHistory(id)
+              : historyHandle.getPersonalHistoryVendor(id),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return Center(child: CircularProgressIndicator());
@@ -32,13 +46,14 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
                   String date = DateFormat("dd-MM-yyyy hh:mm")
-                      .format(jobs[position].data["time"])
+                      .format(jobs[position].data["finishedTime"])
                       .toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();
                   String solution = jobs[position].data["solution"].toString();
-                  String aptra = jobs[position].data["aptraTicket"].toString();
-                  List parts = jobs[position].data["parts"];
+                  String ticketNum =
+                      jobs[position].data["ticketNum"].toString();
+                  List parts = jobs[position].data["partsName"];
                   return ListView(
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
@@ -62,7 +77,7 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                                 Divider(),
                                 ListTile(
                                   title: Text("APTRA ID"),
-                                  subtitle: Text("$aptra"),
+                                  subtitle: Text("$ticketNum"),
                                 ),
                                 Divider(),
                                 parts == null
@@ -82,7 +97,7 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                                                       int position) {
                                                 return ListTile(
                                                   title: Text(
-                                                      "Nama: ${parts[position]["partsname"]} \nJumlah: ${parts[position]["qty"]}\n"),
+                                                      "${position + 1}: ${parts[position]}\n"),
                                                 );
                                               }),
                                         ],
@@ -97,5 +112,13 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                 });
           }),
     );
+  }
+
+  Future getUid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString("userid");
+      role = prefs.get("role");
+    });
   }
 }

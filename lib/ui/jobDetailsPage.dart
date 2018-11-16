@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
 import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobDetailsPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
@@ -18,6 +21,16 @@ class JobDetailsPage extends StatefulWidget {
 }
 
 class JobDetailsPageState extends State<JobDetailsPage> {
+  String id = "";
+  String role = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUid();
+  }
+
   @override
   Widget build(BuildContext context) {
     JobsHandle jobsHandle = JobsHandle();
@@ -109,7 +122,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
-                jobsHandle.acceptJob(widget.jobs, widget.position);
+                role == "Teknisi PKT"
+                    ? jobsHandle.acceptJob(widget.jobs, widget.position)
+                    : jobsHandle.acceptJobVendor(widget.jobs, widget.position);
                 Navigator.pop(context);
                 Navigator.of(context).pushReplacementNamed("/acceptedjobs");
               },
@@ -128,7 +143,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
-                jobsHandle.declineJob(widget.jobs, widget.position);
+                role == "Teknisi PKT"
+                    ? jobsHandle.declineJob(widget.jobs, widget.position)
+                    : jobsHandle.declineJobVendor(widget.jobs, widget.position);
                 Navigator.pop(context);
                 Navigator.of(context).pushReplacementNamed("/availablejobs");
               },
@@ -143,5 +160,13 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             ),
           ],
         ));
+  }
+
+  Future getUid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      id = prefs.getString("userid");
+      role = prefs.get("role");
+    });
   }
 }

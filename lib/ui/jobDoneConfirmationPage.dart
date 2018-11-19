@@ -96,6 +96,7 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
               },
             ),
           ),
+          //newcomment
           changedPartsSelected.isEmpty
               ? Column(
                   children: <Widget>[

@@ -96,7 +96,6 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
               },
             ),
           ),
-          //newcomment
           changedPartsSelected.isEmpty
               ? Column(
                   children: <Widget>[
@@ -176,13 +175,10 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
             if (formKeySolusi.currentState.validate() && pictureTaken != null) {
               formKeySolusi.currentState.save();
               role == "Teknisi PKT"
-                  ? jobsHandle.finishJob(
-                      widget.jobs, widget.position, pictureTaken, solution, changedPartsSelected)
-                  : jobsHandle.finishJobVendor(
-                      widget.jobs, widget.position, pictureTaken, solution, changedPartsSelected);
-              formKeySolusi.currentState.reset();
-              Navigator.of(context).pop();
-              Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+                  ? jobsHandle.finishJob(widget.jobs, widget.position,
+                      pictureTaken, solution, changedPartsSelected, context)
+                  : jobsHandle.finishJobVendor(widget.jobs, widget.position,
+                      pictureTaken, solution, changedPartsSelected, context);
             }
             if (pictureTaken == null) {
               setState(() {

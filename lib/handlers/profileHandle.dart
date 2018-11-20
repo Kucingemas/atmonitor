@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileHandle {
@@ -16,7 +17,22 @@ class ProfileHandle {
   }
 
   //update profile picture
-  updatePicture(File image) async {
+  updatePicture(File image, BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Row(
+              children: <Widget>[
+                Text("Mengunggah"),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                ),
+                CircularProgressIndicator()
+              ],
+            ),
+          );
+        });
     //upload image and get the download url
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     StorageUploadTask storageUploadTask = FirebaseStorage.instance
@@ -44,6 +60,8 @@ class ProfileHandle {
         });
       });
     });
+    Navigator.of(context).pop();
+    Navigator.of(context).pushReplacementNamed("/profile");
   }
 
   //update profile information

@@ -5,26 +5,26 @@ class PartsSearchDelegatesPage extends SearchDelegate<String> {
   List<String> resultList = List<String>();
 
   List<String> partList = [
-    "ajoom",
-    "asd",
-    "adda",
-    "c",
-    "dda",
-    "eeb",
-    "ffqg",
-    "hahay",
-    "jaji",
-    "tqtqt",
-    "pgopo",
-    "mimt",
-    "rooremt",
-    "morom",
-    "astajim",
-    "korok",
-    "korek",
-    "feokeo",
-    "ojn",
-    "pog"
+    "satu",
+    "dua",
+    "tiga",
+    "empat",
+    "lima",
+    "enam",
+    "tujuh",
+    "delapan",
+    "sembilan",
+    "sepuluh",
+    "sebelas",
+    "duabelas",
+    "tigabelas",
+    "empatbelas",
+    "limabelas",
+    "enambelas",
+    "tujuhbelas",
+    "delapanbelas",
+    "sembilanbelas",
+    "duapuluh"
   ];
 
   @override
@@ -128,8 +128,6 @@ class SuggestionList extends StatelessWidget {
                   text: suggestions[position].substring(
                       suggestions[position].indexOf(query),
                       suggestions[position].indexOf(query) + query.length),
-                  // suggestions[position].substring(0, query.length),
-                  // text: suggestions[position].substring(suggestions[position].indexOf(query), suggestions[position].indexOf(query)+query.length)
                   style: theme.textTheme.subhead
                       .copyWith(fontWeight: FontWeight.bold),
                   children: <TextSpan>[
@@ -169,6 +167,7 @@ class ResultList extends StatelessWidget {
           ),
           title: Text(results[position].toString()),
           onTap: () {
+            //TODO: part minus
             String result = results[position];
             onSelected(result);
           },

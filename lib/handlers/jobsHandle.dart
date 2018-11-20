@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class JobsHandle {
@@ -102,8 +103,30 @@ class JobsHandle {
   }
 
   //update status to need help
-  helpJob(List<DocumentSnapshot> jobs, int position, String triedSolution,
-      File image, String problem, String problemCode) async {
+  helpJob(
+      List<DocumentSnapshot> jobs,
+      int position,
+      String triedSolution,
+      File image,
+      String problem,
+      String problemCode,
+      BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Row(
+              children: <Widget>[
+                Text("Mengunggah"),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                ),
+                CircularProgressIndicator()
+              ],
+            ),
+          );
+        });
     Uuid uuid = Uuid();
 
     //upload image to storage
@@ -134,13 +157,31 @@ class JobsHandle {
           .update(documentSnapshot.reference, {"needHelpReason": problem});
       await transaction
           .update(documentSnapshot.reference, {"problemCode": problemCode});
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed("/acceptedjobs");
     });
   }
 
   //update status to finish
   //TODO: parts upload for pkt?
   finishJob(List<DocumentSnapshot> jobs, int position, File image,
-      String solution, List<String> parts) async {
+      String solution, List<String> parts, BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Row(
+              children: <Widget>[
+                Text("Mengunggah"),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                ),
+                CircularProgressIndicator()
+              ],
+            ),
+          );
+        });
     Uuid uuid = Uuid();
 
     //upload image to storage
@@ -168,11 +209,29 @@ class JobsHandle {
           documentSnapshot.reference, {"solution": solution.toString()});
       await transaction.update(
           documentSnapshot.reference, {"image": downloadUrl.toString()});
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed("/acceptedjobs");
     });
   }
 
   finishJobVendor(List<DocumentSnapshot> jobs, int position, File image,
-      String solution, List<String> parts) async {
+      String solution, List<String> parts, BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Row(
+              children: <Widget>[
+                Text("Mengunggah"),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                ),
+                CircularProgressIndicator()
+              ],
+            ),
+          );
+        });
     Uuid uuid = Uuid();
 
     //upload image to storage
@@ -202,6 +261,8 @@ class JobsHandle {
           documentSnapshot.reference, {"vImage": downloadUrl.toString()});
       await transaction
           .update(documentSnapshot.reference, {"partsName": parts});
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed("/acceptedjobs");
     });
   }
 }

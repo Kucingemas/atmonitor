@@ -43,9 +43,6 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
-//                  if (snapshot.connectionState != ConnectionState.done) {
-//                    return Center(child: CircularProgressIndicator());
-//                  }
                   String location = jobs[position].data["location"].toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();

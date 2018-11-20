@@ -224,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void choosePicture(BuildContext context, ImageSource imageSource) {
     ImagePicker.pickImage(source: imageSource).then((File image) {
       setState(() {
-        profileHandle.updatePicture(image);
+        profileHandle.updatePicture(image, context);
       });
     });
   }

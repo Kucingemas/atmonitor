@@ -1,4 +1,4 @@
-import 'package:atmonitor/utils/atmnotification.dart';
+import 'package:atmonitor/utils/atmNotification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +58,7 @@ class AuthHandle {
         content: Text(
           "Nama Pengguna Atau Kata Sandi Salah!",
         ),
-        duration: Duration(milliseconds: 750),
+        duration: Duration(seconds: 2),
       ));
     });
   }

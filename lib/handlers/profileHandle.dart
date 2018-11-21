@@ -19,6 +19,7 @@ class ProfileHandle {
   //update profile picture
   updatePicture(File image, BuildContext context) async {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return AlertDialog(

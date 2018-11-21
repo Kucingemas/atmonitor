@@ -163,7 +163,7 @@ class JobsHandle {
   }
 
   //update status to finish
-  //TODO: parts upload for pkt?
+  //TODO: parts upload for pkt? -- don't have to?
   finishJob(List<DocumentSnapshot> jobs, int position, File image,
       String solution, List<String> parts, BuildContext context) async {
     showDialog(

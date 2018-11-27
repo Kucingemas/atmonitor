@@ -25,7 +25,7 @@ class HistoryHandle {
   }
 
   //get personal history
-  getPersonalHistory(String id) async {
+  getPersonalHistory(String id) {
     Future<QuerySnapshot> getJobs = Firestore.instance
         .collection("jobs")
         .where("status", isEqualTo: "FINISHED")
@@ -39,7 +39,7 @@ class HistoryHandle {
     return getJobs;
   }
 
-  getPersonalHistoryVendor(String id) async {
+  getPersonalHistoryVendor(String id) {
     Future<QuerySnapshot> getJobs = Firestore.instance
         .collection("jobs")
         .where("vStatus", isEqualTo: "vFINISHED")

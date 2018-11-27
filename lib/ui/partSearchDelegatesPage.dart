@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class PartsSearchDelegatesPage extends SearchDelegate<String> {
   List<String> resultList = List<String>();
-
   List<String> partList = [
     "satu",
     "dua",

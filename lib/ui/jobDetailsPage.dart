@@ -43,7 +43,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     String vendorName =
         widget.jobs[widget.position].data["vendorName"].toString();
     String status = widget.jobs[widget.position].data["status"].toString();
-    String time = DateFormat("dd-MM-yyyy hh:mm")
+    String time = DateFormat("d-MM-yyyy hh:mm")
         .format(widget.jobs[widget.position].data["startDatetime"])
         .toString();
     String wsid = widget.jobs[widget.position].data["wsid"].toString();
@@ -122,11 +122,39 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
-                role == "Teknisi PKT"
-                    ? jobsHandle.acceptJob(widget.jobs, widget.position)
-                    : jobsHandle.acceptJobVendor(widget.jobs, widget.position);
-                Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Konfirmasi Penerimaan Pekerjaan"),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              "BATAL",
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          RaisedButton(
+                            child: Text(
+                              "TERIMA",
+                              style: TextStyle(color: aWhite),
+                            ),
+                            onPressed: () {
+                              role == "Teknisi PKT"
+                                  ? jobsHandle.acceptJob(
+                                      widget.jobs, widget.position)
+                                  : jobsHandle.acceptJobVendor(
+                                      widget.jobs, widget.position);
+                              Navigator.pop(context);
+                              Navigator.of(context)
+                                  .pushReplacementNamed("/acceptedjobs");
+                            },
+                          )
+                        ],
+                      );
+                    });
               },
               label: Text(
                 "Terima",
@@ -143,11 +171,37 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
-                role == "Teknisi PKT"
-                    ? jobsHandle.declineJob(widget.jobs, widget.position)
-                    : jobsHandle.declineJobVendor(widget.jobs, widget.position);
-                Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed("/availablejobs");
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Konfirmasi Penolakan Pekerjaan"),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("BATAL"),
+                          ),
+                          RaisedButton(
+                            child: Text(
+                              "TOLAK",
+                              style: TextStyle(color: aWhite),
+                            ),
+                            onPressed: () {
+                              role == "Teknisi PKT"
+                                  ? jobsHandle.declineJob(
+                                      widget.jobs, widget.position)
+                                  : jobsHandle.declineJobVendor(
+                                      widget.jobs, widget.position);
+                              Navigator.pop(context);
+                              Navigator.of(context)
+                                  .pushReplacementNamed("/availablejobs");
+                            },
+                          )
+                        ],
+                      );
+                    });
               },
               label: Text(
                 "Tolak",

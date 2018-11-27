@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobDetailsPage.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,28 +82,28 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
   //on long press, then show details
   longPressDetailShow(BuildContext context, String location, String problem,
       List<DocumentSnapshot> jobs, int position) {
-    var alert = AlertDialog(
+    AlertDialog alert = AlertDialog(
       title: Text(location),
       content: Text(problem),
       actions: <Widget>[
-        Row(
-          children: <Widget>[
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("TUTUP"),
-            ),
-            FlatButton(
-              onPressed: () {
-                jobsHandle.acceptJob(jobs, position);
-                Navigator.pop(context);
-                Navigator.of(context).pushReplacementNamed("/acceptedjobs");
-              },
-              child: Text("TERIMA"),
-            )
-          ],
-          mainAxisAlignment: MainAxisAlignment.end,
+        FlatButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("BATAL"),
+        ),
+        RaisedButton(
+          onPressed: () {
+            role == "Teknisi PKT"
+                ? jobsHandle.acceptJob(jobs, position)
+                : jobsHandle.acceptJobVendor(jobs, position);
+            Navigator.pop(context);
+            Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+          },
+          child: Text(
+            "TERIMA",
+            style: TextStyle(color: aWhite),
+          ),
         )
       ],
     );

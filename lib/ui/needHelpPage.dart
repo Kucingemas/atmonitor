@@ -161,9 +161,55 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
             formKeyKodeProblem.currentState.save();
             formKeyMasalah.currentState.save();
             formKeySolusi.currentState.save();
-            jobsHandle.helpJob(widget.jobs, widget.position, triedSolution,
-                pictureTaken, problem, problemCode, context);
-
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Konfirmasi Permintaan Bantuan"),
+                    content: ListView(
+                      children: <Widget>[
+                        ListTile(
+                          title: Text("Solusi Yang Dicoba"),
+                          subtitle: Text("$triedSolution"),
+                        ),
+                        Divider(),
+                        ListTile(
+                          title: Text("Masalah Yang Dihadapi"),
+                          subtitle: Text("$problem"),
+                        ),
+                        Divider(),
+                        ListTile(
+                          title: Text("Kode Problem Yang Muncul"),
+                          subtitle: Text("$problemCode"),
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("BATAL"),
+                      ),
+                      RaisedButton(
+                        child: Text(
+                          "BANTUAN",
+                          style: TextStyle(color: aWhite),
+                        ),
+                        onPressed: () {
+                          jobsHandle.helpJob(
+                              widget.jobs,
+                              widget.position,
+                              triedSolution,
+                              pictureTaken,
+                              problem,
+                              problemCode,
+                              context);
+                        },
+                      )
+                    ],
+                  );
+                });
           }
           if (pictureTaken == null) {
             setState(() {

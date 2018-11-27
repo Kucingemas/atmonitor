@@ -174,11 +174,53 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           onPressed: () {
             if (formKeySolusi.currentState.validate() && pictureTaken != null) {
               formKeySolusi.currentState.save();
-              role == "Teknisi PKT"
-                  ? jobsHandle.finishJob(widget.jobs, widget.position,
-                      pictureTaken, solution, changedPartsSelected, context)
-                  : jobsHandle.finishJobVendor(widget.jobs, widget.position,
-                      pictureTaken, solution, changedPartsSelected, context);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Konfirmasi Penyelesaian Pekerjaan"),
+                      content: ListView(
+                        children: <Widget>[
+                          ListTile(
+                            title: Text("Solusi Yang Dikerjakan"),
+                            subtitle: Text("$solution"),
+                          ),
+                          Divider(),
+                        ],
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("BATAL"),
+                        ),
+                        RaisedButton(
+                          child: Text(
+                            "KONFIRMASI",
+                            style: TextStyle(color: aWhite),
+                          ),
+                          onPressed: () {
+                            role == "Teknisi PKT"
+                                ? jobsHandle.finishJob(
+                                    widget.jobs,
+                                    widget.position,
+                                    pictureTaken,
+                                    solution,
+                                    changedPartsSelected,
+                                    context)
+                                : jobsHandle.finishJobVendor(
+                                    widget.jobs,
+                                    widget.position,
+                                    pictureTaken,
+                                    solution,
+                                    changedPartsSelected,
+                                    context);
+                          },
+                        )
+                      ],
+                    );
+                  });
             }
             if (pictureTaken == null) {
               setState(() {

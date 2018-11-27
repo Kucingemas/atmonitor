@@ -36,8 +36,7 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
   Widget build(BuildContext context) {
 //    String hAssignedTo =
 //        widget.jobs[widget.position].data["hAssignedTo"].toString();
-    DateTime needHelpTime =
-        widget.jobs[widget.position].data["needHelpTime"];
+    DateTime needHelpTime = widget.jobs[widget.position].data["needHelpTime"];
     print("ini need help time: $needHelpTime");
     String location = widget.jobs[widget.position].data["location"].toString();
     String problem =
@@ -148,6 +147,10 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             role == "Teknisi PKT" && needHelpTime == null
                 ? FloatingActionButton.extended(
                     heroTag: null,
+                    label: Text(
+                      "Bantuan",
+                      style: TextStyle(color: aBlue800),
+                    ),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -158,10 +161,6 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
                     icon: Icon(
                       Icons.person,
                       color: aBlue800,
-                    ),
-                    label: Text(
-                      "Bantuan",
-                      style: TextStyle(color: aBlue800),
                     ),
                   )
                 : Column(),

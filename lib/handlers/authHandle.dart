@@ -12,7 +12,7 @@ class AuthHandle {
       GlobalKey<ScaffoldState> key) async {
     AtmNotification atmNotification = AtmNotification();
     key.currentState.showSnackBar(SnackBar(
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 5),
       content: Row(
         children: <Widget>[
           SizedBox(
@@ -58,7 +58,7 @@ class AuthHandle {
         content: Text(
           "Nama Pengguna Atau Kata Sandi Salah!",
         ),
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 3),
       ));
     });
   }

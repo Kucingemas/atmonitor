@@ -131,15 +131,17 @@ class JobDetailsPageState extends State<JobDetailsPage> {
                           FlatButton(
                             child: Text(
                               "BATAL",
+                              style: TextStyle(color: aBlue800),
                             ),
                             onPressed: () {
                               Navigator.pop(context);
                             },
                           ),
                           RaisedButton(
+                            color: aOrange500,
                             child: Text(
                               "TERIMA",
-                              style: TextStyle(color: aWhite),
+                              style: TextStyle(color: aBlue800),
                             ),
                             onPressed: () {
                               role == "Teknisi PKT"
@@ -181,12 +183,16 @@ class JobDetailsPageState extends State<JobDetailsPage> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text("BATAL"),
+                            child: Text(
+                              "BATAL",
+                              style: TextStyle(color: aBlue800),
+                            ),
                           ),
                           RaisedButton(
+                            color: aOrange500,
                             child: Text(
                               "TOLAK",
-                              style: TextStyle(color: aWhite),
+                              style: TextStyle(color: aBlue800),
                             ),
                             onPressed: () {
                               role == "Teknisi PKT"

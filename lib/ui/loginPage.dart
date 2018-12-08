@@ -1,4 +1,5 @@
 import 'package:atmonitor/handlers/authHandle.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,10 +10,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  var _namaPenggunaController = TextEditingController();
-  var _kataSandiController = TextEditingController();
-  final authHandle = AuthHandle();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController _namaPenggunaController = TextEditingController();
+  TextEditingController _kataSandiController = TextEditingController();
+  final AuthHandle authHandle = AuthHandle();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(
-                      //icon: Icon(Icons.face),
+                        //icon: Icon(Icons.face),
                         labelText: "Nama Pengguna: ",
                         border: OutlineInputBorder()),
                     controller: _namaPenggunaController,
@@ -46,7 +47,7 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   TextField(
                     decoration: InputDecoration(
-                      //icon: Icon(Icons.lock),
+                        //icon: Icon(Icons.lock),
                         labelText: "Kata Sandi: ",
                         border: OutlineInputBorder()),
                     controller: _kataSandiController,
@@ -64,6 +65,7 @@ class LoginPageState extends State<LoginPage> {
                               "LUPA PASSWORD",
                             )),
                         RaisedButton(
+                          color: aOrange500,
                           onPressed: () {
                             authHandle.signIn(
                                 _namaPenggunaController.text.toString(),
@@ -73,6 +75,7 @@ class LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             "MASUK",
+                            style: TextStyle(color: aBlue800),
                           ),
                         ),
                       ],

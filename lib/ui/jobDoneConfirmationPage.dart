@@ -32,7 +32,6 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
   File pictureTaken;
   List<String> changedPartsSelected = List<String>();
   String solution = "";
-  List<List<Map<dynamic, dynamic>>> parts = List<List<Map<dynamic, dynamic>>>();
 
   @override
   void initState() {
@@ -186,6 +185,22 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                             subtitle: Text("$solution"),
                           ),
                           Divider(),
+                          ListTile(
+                            title: Text("Parts"),
+                            subtitle: ListView.builder(
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: changedPartsSelected.length,
+                              itemBuilder:
+                                  (BuildContext context, int position) {
+                                return ListTile(
+                                  subtitle:
+                                      Text(changedPartsSelected[position]),
+                                );
+                              },
+                            ),
+                          ),
+                          Divider(),
                         ],
                       ),
                       actions: <Widget>[
@@ -193,12 +208,16 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text("BATAL"),
+                          child: Text(
+                            "BATAL",
+                            style: TextStyle(color: aBlue800),
+                          ),
                         ),
                         RaisedButton(
+                          color: aOrange500,
                           child: Text(
                             "KONFIRMASI",
-                            style: TextStyle(color: aWhite),
+                            style: TextStyle(color: aBlue800),
                           ),
                           onPressed: () {
                             role == "Teknisi PKT"

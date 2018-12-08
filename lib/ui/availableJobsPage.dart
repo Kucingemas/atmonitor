@@ -90,9 +90,13 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("BATAL"),
+          child: Text(
+            "BATAL",
+            style: TextStyle(color: aBlue800),
+          ),
         ),
         RaisedButton(
+          color: aOrange500,
           onPressed: () {
             role == "Teknisi PKT"
                 ? jobsHandle.acceptJob(jobs, position)
@@ -102,7 +106,7 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
           },
           child: Text(
             "TERIMA",
-            style: TextStyle(color: aWhite),
+            style: TextStyle(color: aBlue800),
           ),
         )
       ],

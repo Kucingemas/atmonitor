@@ -26,8 +26,6 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
   String triedSolution = "";
   String problem = "";
   String problemCode = "";
-  String kodeProblem = "";
-  String placeHolderKodeProblem = "Pilih Kode Problem";
   String pictureEmpty = "tidak ada gambar";
 
   @override
@@ -189,12 +187,16 @@ class _NeedHelpPageState extends State<NeedHelpPage> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("BATAL"),
+                        child: Text(
+                          "BATAL",
+                          style: TextStyle(color: aBlue800),
+                        ),
                       ),
                       RaisedButton(
+                        color: aOrange500,
                         child: Text(
                           "BANTUAN",
-                          style: TextStyle(color: aWhite),
+                          style: TextStyle(color: aBlue800),
                         ),
                         onPressed: () {
                           jobsHandle.helpJob(

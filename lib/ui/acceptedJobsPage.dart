@@ -49,15 +49,13 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                   return Card(
                     child: Container(
                       child: ListTile(
-                          title: Text("$location"),
-                          subtitle: Text("$problem"),
-                          trailing: Icon(Icons.chevron_right),
-                          onTap: () {
-                            pressDetailShow(jobs, position);
-                          },
-                          onLongPress: () {
-                            longPressDetailShow();
-                          }),
+                        title: Text("$location"),
+                        subtitle: Text("$problem"),
+                        trailing: Icon(Icons.chevron_right),
+                        onTap: () {
+                          pressDetailShow(jobs, position);
+                        },
+                      ),
                     ),
                   );
                 });
@@ -75,9 +73,6 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                   position,
                 )));
   }
-
-  //on long press show... nothing for the time being...
-  longPressDetailShow() {}
 
   //get user id
   Future getUid() async {

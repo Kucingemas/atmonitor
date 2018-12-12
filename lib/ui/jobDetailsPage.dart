@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:atmonitor/handlers/jobsHandle.dart';
 import 'package:atmonitor/ui/jobHistoryPage.dart';
@@ -7,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsPage extends StatefulWidget {
   final List<DocumentSnapshot> jobs;
@@ -23,6 +25,7 @@ class JobDetailsPage extends StatefulWidget {
 class JobDetailsPageState extends State<JobDetailsPage> {
   String id = "";
   String role = "";
+  static var httpClient = new HttpClient();
 
   @override
   void initState() {
@@ -47,6 +50,16 @@ class JobDetailsPageState extends State<JobDetailsPage> {
         .format(widget.jobs[widget.position].data["startDatetime"])
         .toString();
     String wsid = widget.jobs[widget.position].data["wsid"].toString();
+    String problemCode =
+        widget.jobs[widget.position].data["problemCode"].toString();
+    String triedSolution =
+        widget.jobs[widget.position].data["triedSolution"].toString();
+    String triedImage =
+        widget.jobs[widget.position].data["triedImage"].toString();
+    String needHelpTime =
+        widget.jobs[widget.position].data["needHelpTime"].toString();
+    String needHelpReason =
+        widget.jobs[widget.position].data["needHelpReason"].toString();
 
     return Scaffold(
         appBar: AppBar(
@@ -106,6 +119,36 @@ class JobDetailsPageState extends State<JobDetailsPage> {
                   title: Text("Deskripsi Masalah"),
                   subtitle: Text("$problem"),
                 ),
+                //HELPER START
+                needHelpTime == "null"
+                    ? Column()
+                    : Column(
+                        children: <Widget>[
+                          Divider(),
+                          ListTile(
+                            title: Text("Kode Masalah"),
+                            subtitle: Text("$problemCode"),
+                          ),
+                          Divider(),
+                          ListTile(
+                            title: Text("Masalah Yang Dihadapi"),
+                            subtitle: Text("$needHelpReason"),
+                          ),
+                          Divider(),
+                          ListTile(
+                            title: Text("Solusi Yang Dicoba"),
+                            subtitle: Text("$triedSolution"),
+                          ),
+                          Divider(),
+                          ListTile(
+                              title: Text("Tautan Gambar"),
+                              subtitle: Text("klik untuk melihat"),
+                              onTap: () {
+                                openImage(triedImage);
+                              }),
+                        ],
+                      ),
+                //HELPER END
                 Divider(),
                 ListTile(
                   title: Text("Status"),
@@ -228,5 +271,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
       id = prefs.getString("userid");
       role = prefs.get("role");
     });
+  }
+
+  openImage(String url) async {
+    await canLaunch(url) ? launch(url) : print("error");
   }
 }

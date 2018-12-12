@@ -1,12 +1,11 @@
 import 'package:atmonitor/ui/acceptedJobsPage.dart';
 import 'package:atmonitor/ui/availableJobsPage.dart';
-import 'package:atmonitor/ui/personalHistoryPage.dart';
 import 'package:atmonitor/ui/loginPage.dart';
+import 'package:atmonitor/ui/personalHistoryPage.dart';
 import 'package:atmonitor/ui/profilePage.dart';
-import 'package:flutter/material.dart';
-
 import 'package:atmonitor/utils/landingPage.dart';
 import 'package:atmonitor/utils/theme.dart';
+import 'package:flutter/material.dart';
 
 main() {
   runApp(MaterialApp(

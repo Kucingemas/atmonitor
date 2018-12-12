@@ -75,60 +75,68 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
           Padding(
             padding: EdgeInsets.all(10.0),
           ),
-          Divider(),
-          ListTile(
-            title: Text("Suku Cadang Yang Diganti"),
-            subtitle: Text("daftar suku cadang: "),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.add_circle,
-                color: aBlue800,
-              ),
-              onPressed: () async {
-                showSearch(
-                        context: context, delegate: PartsSearchDelegatesPage())
-                    .then((part) {
-                  part == null
-                      ? debugPrint("part kosong tidak terlempar")
-                      : changedPartsSelected.add(part.toString());
-                });
-              },
-            ),
-          ),
-          changedPartsSelected.isEmpty
-              ? Column(
+          role.contains("PKT")
+              ? Column()
+              : Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 10.0,
+                    Divider(),
+                    ListTile(
+                      title: Text("Suku Cadang Yang Diganti"),
+                      subtitle: Text("daftar suku cadang: "),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.add_circle,
+                          color: aBlue800,
+                        ),
+                        onPressed: () async {
+                          showSearch(
+                                  context: context,
+                                  delegate: PartsSearchDelegatesPage())
+                              .then((part) {
+                            part == null
+                                ? debugPrint("part kosong tidak terlempar")
+                                : changedPartsSelected.add(part.toString());
+                          });
+                        },
+                      ),
                     ),
-                    Text(
-                      "tidak ada suku cadang yang diganti",
-                      textAlign: TextAlign.center,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                    )
-                  ],
-                )
-              : ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: changedPartsSelected.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return ListTile(
-                        title: Text(changedPartsSelected[position].toString()),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.remove_circle,
-                            color: Colors.redAccent,
+                    changedPartsSelected.isEmpty
+                        ? Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                "tidak ada suku cadang yang diganti",
+                                textAlign: TextAlign.center,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(10.0),
+                              )
+                            ],
+                          )
+                        : ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: changedPartsSelected.length,
+                            itemBuilder: (BuildContext context, int position) {
+                              return ListTile(
+                                  title: Text(changedPartsSelected[position]
+                                      .toString()),
+                                  trailing: IconButton(
+                                    icon: Icon(
+                                      Icons.remove_circle,
+                                      color: Colors.redAccent,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        changedPartsSelected.removeAt(position);
+                                      });
+                                    },
+                                  ));
+                            },
                           ),
-                          onPressed: () {
-                            setState(() {
-                              changedPartsSelected.removeAt(position);
-                            });
-                          },
-                        ));
-                  },
+                  ],
                 ),
           Divider(),
           ListTile(
@@ -185,21 +193,24 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                             subtitle: Text("$solution"),
                           ),
                           Divider(),
-                          ListTile(
-                            title: Text("Parts"),
-                            subtitle: ListView.builder(
-                              shrinkWrap: true,
-                              physics: ClampingScrollPhysics(),
-                              itemCount: changedPartsSelected.length,
-                              itemBuilder:
-                                  (BuildContext context, int position) {
-                                return ListTile(
-                                  subtitle:
-                                      Text(changedPartsSelected[position]),
-                                );
-                              },
-                            ),
-                          ),
+                          changedPartsSelected.isEmpty
+                              ? ListTile(
+                                  title: Text("Tidak Ada Parts Yang Diganti"))
+                              : ListTile(
+                                  title: Text("Parts"),
+                                  subtitle: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: ClampingScrollPhysics(),
+                                    itemCount: changedPartsSelected.length,
+                                    itemBuilder:
+                                        (BuildContext context, int position) {
+                                      return ListTile(
+                                        subtitle: Text(
+                                            changedPartsSelected[position]),
+                                      );
+                                    },
+                                  ),
+                                ),
                           Divider(),
                         ],
                       ),

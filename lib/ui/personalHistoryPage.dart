@@ -21,7 +21,7 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUid();
+    getSp();
   }
 
   @override
@@ -114,7 +114,7 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
     );
   }
 
-  Future getUid() async {
+  Future getSp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       id = prefs.getString("userid");

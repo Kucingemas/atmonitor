@@ -36,23 +36,4 @@ exports.atmonitor = functions.firestore
                 }
             });
         }
-
-            //const receiverFcm = admin.firestore().collection("users").doc(receiver).get();
-            // if(receiverFcm.exists) console.log("ada");
-            // console.log(receiverFcm);
-            // console.log(receiverFcm[0].data().uid);
-            // console.log(receiverFcm[0].data().name);
-            // return Promise.all([receiverFcm]).then(hasil => {
-            //     const tokenId = hasil[0].data().notifToken;
-            //     const notificationContent = {
-            //         notification: {
-            //             title: "ada pekerjaan baru untukmu!",
-            //             body: "ayo cek aplikasi atmonitor > daftar pekerjaan, sekarang",
-            //             icon: "default",
-            //             sound: "default"
-            //         }};
-            //     return admin.messaging().sendToDevice(tokenId, notificationContent).then(result => {console.log("sent");
-            // });
-            // });
-
        });

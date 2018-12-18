@@ -31,7 +31,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUid();
+    getSp();
   }
 
   @override
@@ -265,7 +265,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
         ));
   }
 
-  Future getUid() async {
+  Future getSp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       id = prefs.getString("userid");

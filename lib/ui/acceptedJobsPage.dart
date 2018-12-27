@@ -49,7 +49,10 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(Icons.tag_faces, color: aBlue700,),
+                    Icon(
+                      Icons.tag_faces,
+                      color: aBlue700,
+                    ),
                     Padding(padding: EdgeInsets.all(5.0)),
                     Text(
                       "tidak ada pekerjaan yang tersedia saat ini",

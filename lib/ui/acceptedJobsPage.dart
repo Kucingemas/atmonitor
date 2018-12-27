@@ -38,8 +38,15 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
               : jobsHandle.getAcceptedJobsVendor(id),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) return Center();
+            if (!snapshot.hasData)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             List<DocumentSnapshot> jobs = snapshot.data.documents;
+            if (jobs.length == 0)
+              return Center(
+                child: Text("tidak ada pekerjaan yang tersedia saat ini"),
+              );
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {

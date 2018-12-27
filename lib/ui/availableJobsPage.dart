@@ -46,7 +46,16 @@ class _AvailableJobsPage extends State<AvailableJobsPage> {
             List<DocumentSnapshot> jobs = snapshot.data.documents;
             if (jobs.length == 0)
               return Center(
-                child: Text("tidak ada pekerjaan yang tersedia saat ini"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.tag_faces),
+                    Padding(padding: EdgeInsets.all(5.0)),
+                    Text(
+                      "tidak ada pekerjaan yang tersedia saat ini",
+                    ),
+                  ],
+                ),
               );
             return ListView.builder(
                 itemCount: jobs.length,

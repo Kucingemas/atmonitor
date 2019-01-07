@@ -35,10 +35,7 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-//    String hAssignedTo =
-//        widget.jobs[widget.position].data["hAssignedTo"].toString();
     DateTime needHelpTime = widget.jobs[widget.position].data["needHelpTime"];
-    print("ini need help time: $needHelpTime");
     String location = widget.jobs[widget.position].data["location"].toString();
     String problem =
         widget.jobs[widget.position].data["problemDesc"].toString();
@@ -120,7 +117,7 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
                   subtitle: Text("$problem"),
                 ),
                 //HELPER START
-                needHelpTime == "null"
+                needHelpTime.toString() == "null"
                     ? Column()
                     : Column(
                         children: <Widget>[

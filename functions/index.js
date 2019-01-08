@@ -37,3 +37,5 @@ exports.atmonitor = functions.firestore
             });
         }
        });
+
+exports.parseEmail = functions.https.

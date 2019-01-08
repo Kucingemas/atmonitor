@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:atmonitor/handlers/historyHandle.dart';
 import 'package:atmonitor/ui/masterDrawer.dart';
+import 'package:atmonitor/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -37,11 +38,27 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
               ? historyHandle.getPersonalHistory(id)
               : historyHandle.getPersonalHistoryVendor(id),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
+            if (snapshot.connectionState != ConnectionState.done)
               return Center(child: CircularProgressIndicator());
-            }
             if (!snapshot.hasData) return Center();
             List<DocumentSnapshot> jobs = snapshot.data.documents;
+            if (jobs.length == 0)
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.tag_faces,
+                      color: aBlue700,
+                    ),
+                    Padding(padding: EdgeInsets.all(5.0)),
+                    Text(
+                      "tidak ada riwayat pekerjaan",
+                      style: TextStyle(color: aBlue700),
+                    ),
+                  ],
+                ),
+              );
             return ListView.builder(
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {

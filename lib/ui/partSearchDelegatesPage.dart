@@ -4,26 +4,16 @@ import 'package:flutter/material.dart';
 class PartsSearchDelegatesPage extends SearchDelegate<String> {
   List<String> resultList = List<String>();
   List<String> partList = [
-    "satu",
-    "dua",
-    "tiga",
-    "empat",
-    "lima",
-    "enam",
-    "tujuh",
-    "delapan",
-    "sembilan",
-    "sepuluh",
-    "sebelas",
-    "duabelas",
-    "tigabelas",
-    "empatbelas",
-    "limabelas",
-    "enambelas",
-    "tujuhbelas",
-    "delapanbelas",
-    "sembilanbelas",
-    "duapuluh"
+    "POWER_SUPPLY:120W:WPS120-FCE:T1-ATM",
+    "ASSY:CARRIAGE_COVER",
+    "SUB_ASSY:MOTOR_PICK_UP",
+    "PCB Card Reader (Flicker card reader)",
+    "MONITOR:LCD:1W:200CD:LP141WX3-TLN1:LG",
+    "Receipt Printer Eco",
+    "BELT:SE-N-SMV1:14Wx551x0.8t:G-CDU",
+    "HDD:3.5INCH:SATA:1TB",
+    "PC:FC_EX:G41:E7600:2GB:1DD1",
+    "DVD-RW:CD-RW:SH-S182:TS-H652",
   ];
 
   @override

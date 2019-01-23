@@ -55,7 +55,7 @@ class _AcceptedJobsPageState extends State<AcceptedJobsPage> {
                     ),
                     Padding(padding: EdgeInsets.all(5.0)),
                     Text(
-                      "tidak ada pekerjaan yang tersedia saat ini",
+                      "tidak ada pekerjaan yang sudah diterima",
                       style: TextStyle(color: aBlue700),
                     ),
                   ],

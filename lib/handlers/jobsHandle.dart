@@ -158,7 +158,7 @@ class JobsHandle {
       await transaction
           .update(documentSnapshot.reference, {"problemCode": problemCode});
       Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+      Navigator.pushNamedAndRemoveUntil(context,"/acceptedjobs", (_) => false);
     });
   }
 
@@ -210,7 +210,7 @@ class JobsHandle {
       await transaction.update(
           documentSnapshot.reference, {"image": downloadUrl.toString()});
       Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+      Navigator.pushNamedAndRemoveUntil(context,"/acceptedjobs", (_) => false);
     });
   }
 
@@ -262,7 +262,7 @@ class JobsHandle {
       await transaction
           .update(documentSnapshot.reference, {"partsName": parts});
       Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed("/acceptedjobs");
+      Navigator.pushNamedAndRemoveUntil(context,"/acceptedjobs", (_) => false);
     });
   }
 }

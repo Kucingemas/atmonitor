@@ -40,7 +40,6 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState != ConnectionState.done)
               return Center(child: CircularProgressIndicator());
-            if (!snapshot.hasData) return Center();
             List<DocumentSnapshot> jobs = snapshot.data.documents;
             if (jobs.length == 0)
               return Center(
@@ -63,13 +62,26 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                 itemCount: jobs.length,
                 itemBuilder: (BuildContext context, int position) {
                   String date = DateFormat("dd-MM-yyyy hh:mm")
-                      .format(jobs[position].data["finishedTime"])
+                      .format(jobs[position].data["startDatetime"])
                       .toString();
                   String problem =
                       jobs[position].data["problemDesc"].toString();
                   String solution = jobs[position].data["solution"].toString();
                   String ticketNum =
                       jobs[position].data["ticketNum"].toString();
+                  String location = jobs[position].data["location"].toString();
+                  String finishedTime =
+                      jobs[position].data["finishedTime"].toString() == "null"
+                          ? "Tidak Ada Waktu Selesai PKT"
+                          : DateFormat("dd-MM-yyyy hh:mm")
+                              .format(jobs[position].data["finishedTime"])
+                              .toString();
+                  String vFinishedTime =
+                      jobs[position].data["vFinishedTime"].toString() == "null"
+                          ? "Tidak Ada Waktu Selesai Vendor"
+                          : DateFormat("dd-MM-yyyy hh:mm")
+                              .format(jobs[position].data["vFinishedTime"])
+                              .toString();
                   List parts = jobs[position].data["partsName"];
                   return ListView(
                     shrinkWrap: true,
@@ -83,6 +95,11 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                               title: Text("$date"),
                               children: <Widget>[
                                 ListTile(
+                                  title: Text("Lokasi"),
+                                  subtitle: Text("$location"),
+                                ),
+                                Divider(),
+                                ListTile(
                                   title: Text("Detil Masalah"),
                                   subtitle: Text("$problem"),
                                 ),
@@ -90,6 +107,16 @@ class _PersonalHistoryPageState extends State<PersonalHistoryPage> {
                                 ListTile(
                                   title: Text("Solusi"),
                                   subtitle: Text("$solution"),
+                                ),
+                                Divider(),
+                                ListTile(
+                                  title: Text("Waktu Selesai - PKT"),
+                                  subtitle: Text("$finishedTime"),
+                                ),
+                                Divider(),
+                                ListTile(
+                                  title: Text("Waktu Selesai - Vendor"),
+                                  subtitle: Text("$vFinishedTime"),
                                 ),
                                 Divider(),
                                 ListTile(

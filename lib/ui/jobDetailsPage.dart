@@ -86,7 +86,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  title: Text("Aptra ID"),
+                  title: Text("Ticket ID"),
                   subtitle: Text("$aptra"),
                 ),
                 Divider(),

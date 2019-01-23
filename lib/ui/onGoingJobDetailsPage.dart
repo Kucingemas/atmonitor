@@ -83,7 +83,7 @@ class OnGoingJobDetailsPageState extends State<OnGoingJobDetailsPage> {
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  title: Text("Aptra ID"),
+                  title: Text("Ticket ID"),
                   subtitle: Text("$aptra"),
                 ),
                 Divider(),

@@ -205,6 +205,7 @@ class _JobDoneConfirmationPageState extends State<JobDoneConfirmationPage> {
                                     itemBuilder:
                                         (BuildContext context, int position) {
                                       return ListTile(
+                                        title: Text("${position+1}."),
                                         subtitle: Text(
                                             changedPartsSelected[position]),
                                       );

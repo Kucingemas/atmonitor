@@ -62,7 +62,7 @@ class ProfileHandle {
       });
     });
     Navigator.of(context).pop();
-    Navigator.of(context).pushReplacementNamed("/profile");
+    Navigator.pushNamedAndRemoveUntil(context,"/profile", (_) => false);
   }
 
   //update profile information
